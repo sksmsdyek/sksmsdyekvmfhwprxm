@@ -1,0 +1,19 @@
+extends ../layout 
+
+block content
+    .container
+        div
+            ul.nav.nav-tabs(role = 'tablist')
+                li(role='presentation')
+                    a(href='#list') 호스팅 목록
+                |   
+                li(role='presentation')
+                    a(href='#reservation') 에약관리
+                |   
+
+            .tab-content
+                #list.tab-pane.active(role = 'tabpanel') 가나다라
+                
+                #reservation.tab-pane(role = 'tabpanel') 나다라바사
+
+     script(type='text/javascript', src='/javascripts/management.js')

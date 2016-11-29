@@ -1,0 +1,33 @@
+extends layout
+
+block hero-unit 
+  .container
+    if(currentUser) 
+      h1 여행은 타이밍이다.
+ 
+        .row
+          .col-me-10
+            img(src = '/images/main.jpg' class="img-responsive")
+        
+        .col-md-4
+          .line
+            .thumbnail
+              each host in hosts
+                img(src='images/test.jpg ', class = 'img-responsive')
+                |             
+                .caption
+                    | 제목 : #{host.title}
+                    br
+                    | 주소 : #{host.address}
+                    br
+                    | 도시 : #{host.city}
+                    br
+                    a(href='/host/#{host.id}/detail') 상세보기 
+
+    else
+      center
+        h1 여러분의 여행을 책임집니다.
+        p Welcome to HunBnB
+        img(src = '/images/start.jpg' class="img-responsive")
+
+

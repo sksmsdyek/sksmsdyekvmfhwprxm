@@ -1,0 +1,60 @@
+extends ../layout 
+
+block hero-unit 
+  .container 
+    h1.pageTitle 자신의 숙소를 등록해보세요
+block content 
+  .container 
+    form(action = '/host/update', method='POST')
+      p
+        .row
+          .col-sm-8
+            .form-group
+              label(for = 'title') 제목
+              input.form-control(type = 'text', name = 'title', id = 'title', placeholder = 'Title here')
+              label(for = 'content') 설명
+              input.form-control(type = 'text', rows = '20', name = 'content', id = 'content', placeholder = 'Content here')
+              label(for = 'address') 주소
+              input.form-control(type = 'text', name = 'address', id = 'address', placeholder = 'Address here')
+              label(for = 'rule') 규칙
+              input.form-control(type = 'text', rows = '10', name = 'rule', id = 'rule', placeholder = 'Rule here')
+              label(for = 'cost') 요금
+              input.form-control(type = 'text', name = 'cost', id = 'cost', placeholder = 'Cost here')
+              label(for = 'market') 편의시설
+              input(type = 'checkbox', name = 'market', value ='냉장고')
+              | 냉장고
+              input(type = 'checkbox', name = 'market', value ='드라이기')
+              | 드라이기
+              input(type = 'checkbox', name = 'market', value ='에어컨')
+              | 에어컨
+              input(type = 'checkbox', name = 'market', value ='밥솥')
+              | 밥솥
+              input(type = 'checkbox', name = 'market', value ='히터')
+              | 히터
+      p
+        .row
+          .col-sm-8
+            label(for = 'city') 도시
+              select.form-control(name='city')
+                option(selected value='서울') 서울
+                option(value='용인') 용인
+                option(value='대구') 대구
+                option(value='대전') 대전
+                option(value='인천') 인천
+                option(value='부산') 부산
+                option(value='울산') 울산
+                option(value='원주') 원주
+                option(value='광주') 광주
+                option(value='제주도') 제주도
+                option(value='울릉도') 울릉도
+
+  
+      p
+        .row
+          div.form-actions
+          button.btn.btn-primary(type='submit') 완료
+    
+
+    
+
+

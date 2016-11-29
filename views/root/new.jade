@@ -1,0 +1,18 @@
+extends ../layout 
+
+ 
+block content 
+  .container 
+    p 
+      b 권한을 부여할 e-mail을 입력하세요. 
+    p 
+    hr 
+    p 
+    form(action='/root', method='POST') 
+      .form-group 
+        label(for='email') Email address 
+        input.form-control(type='email', id='email', name='email', placeholder='Email') 
+        p 
+        hr 
+        p 
+        button.btn.btn-primary.btn-block(type='submit') 권한부여  
