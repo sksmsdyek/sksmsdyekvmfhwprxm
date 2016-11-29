@@ -13,6 +13,8 @@ router.get('/', function(req, res, next) {
   });
 });
 
+
+
 //로그인 누를 시
 router.get('/signin', function(req, res, next){
   res.render('signin');

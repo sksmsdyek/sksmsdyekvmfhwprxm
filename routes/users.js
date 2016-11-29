@@ -16,6 +16,7 @@ function needAuth(req, res, next){
 function validateForm(form, options){
   var name = form.name || '';
   var email = form.email || '';
+  
   name = name.trim();
   email = email.trim();
 
@@ -23,28 +24,30 @@ function validateForm(form, options){
     return '이름을 입력하시오';
   }
   if(!email){
-
+    return '이메일을 입력하시오';
   }
-   if(!form.password && options.needPassword){
+  if(!form.password && options.needPassword){
      return '비밀번호를 입력하시오.';
-    
   }
-   if(form.password.length < 6){
+  if(form.newpassword){
+    if(form.newpassword !== form.new_password){
+      return '변경할 비밀번호가 일치하지 않습니다.';
+    }
+  }else
+  if(options.needPassword){
+    if(form.password !== form.new_password){
+      return '비밀번호가 일치하지 않습니다.';
+    }
+  }
+  if(form.password.length < 6){
      return '비밀번호는 6자 이상입니다.';
-    
   }
-   if(form.password !== form.password_confirmation){
-     return '비밀번호가 일치하지 않습니다.';
-    
-  }
-
   return null;
 }
 
-//
-router.get('/', needAuth, function(req, res, next){
-  if(!req.user.manager){
-    req.flash('danger', '관리자가 아닙니다.');
+router.get('/root', needAuth, function(req, res, next){
+  if(!req.user.root){
+    req.flash('danger', '자격이 없습니다.');
     return res.redirect('back');
   }
   User.find({}, function(err, users){
@@ -55,79 +58,7 @@ router.get('/', needAuth, function(req, res, next){
   });
 });
 
-//회원가입 
-router.get('/new', function(req, res, next){
-  res.render('users/new', {messages : req.flash()});
-});
- 
- //회원정보 수정
- router.get('/:id/edit', function(req, res, next){
-   User.findById(req.params.id, function(err, user){
-     if(err){
-       return next(err);
-     }
-     res.render('users/edet', {user : user});
-   });
- });
-
-//회원정보 수정
- router.put('/:id', function(req, res, next){
-   var err = validateForm(req.body, {needPassword : false});
-   if(err){
-     req.flash('danger', err);
-     return res.redirect('back');
-   }
-   User.findById({_id : req.params.id}, function(err, user){
-     if(err){
-       return next(err);
-     }
-     if(!user){
-       req.flash('danger', '존재하지 않는 사용자입니다.');
-       return res.redirect('back');
-     }
-     if(user.password !== req.body.current_password){
-       req.flash('danger', '현재 비밀번호가 일치하지 않습니다.');
-       return res.redirect('back');
-     }
-
-     user.name = req.body.name;
-     user.email = req.body.email;
-
-     if(req.body.password){
-       user.password = req.body.password;
-     }
-     user.save(function(err){
-       if(err){
-         return next(err);
-       }
-       req.flash('success', '사용자 정보가 변경되었습니다.');
-       res.redirect('/users/' + req.user._id);
-     });
-   });
- });
-
-//회원정보 삭제
- router.delete('/:id', function(req, res, next){
-   User.findOneAndRemove({_id : req.body.id}, function(err){
-     if(err){
-       return next(err);
-     }
-     req.flash('success', '사용자 계정이 삭제되었습니다.');
-     res.redirect('/users');
-   });
- });
-
- //회원정보 보기
- router.get('/:id', function(req, res, next){
-   User.findById(req.params.id, function(err, user){
-     if(err){
-       return next(err);
-     }
-     res.render('users/show', {user : user});
-   });
- });
-
- //회원가입
+//회원가입
  router.post('/', function(req, res, next){
    var err = validateForm(req.body, {needPassword : true});
    if(err){
@@ -146,7 +77,7 @@ router.get('/new', function(req, res, next){
        name : req.body.name,
        email : req.body.email
      });
-     newUser.password = newUser.generateHash(req.body.password);
+     newUser.password =newUser.generateHash(req.body.password);
 
      newUser.save(function(err){
        if(err){
@@ -156,6 +87,77 @@ router.get('/new', function(req, res, next){
          res.redirect('/');
        }
      });
+   });
+ });
+
+//회원가입 
+router.get('/new', function(req, res, next){
+  res.render('users/new', {messages : req.flash()});
+});
+ 
+ //회원정보 수정누를시 edit로 넘어간다.
+ router.get('/:id/edit', function(req, res, next){
+   User.findById(req.params.id, function(err, user){
+     if(err){
+       return next(err);
+     }
+     res.render('users/edit', {user : user});
+   });
+ });
+
+//회원정보 수정
+ router.put('/:id', function(req, res, next){
+   var err = validateForm(req.body, {needPassword : false});
+   if(err){
+     req.flash('danger', err);
+     return res.redirect('back');
+   }
+   User.findById({_id : req.params.id}, function(err, user){
+     if(err){
+       return next(err);
+     }
+     if(!user){
+       req.flash('danger', '존재하지 않는 사용자입니다.');
+       return res.redirect('back');
+     }
+     if(!user.validatePassword(req.body.password)){
+       req.flash('danger', '현재 비밀번호가 일치하지 않습니다. 옳바른 입력을 하시오.');
+       return res.redirect('back');
+     }
+     user.name = req.body.name;
+     user.email = req.body.email;
+
+     if(req.body.newpassword){
+       user.password = user.generateHash(req.body.newpassword);
+     }
+     user.save(function(err){
+       if(err){
+         return next(err);
+       }
+       req.flash('success', '사용자 정보가 변경되었습니다.');
+       res.redirect('/users/' + req.user._id);
+      });
+   });
+ });
+
+//회원정보 삭제
+ router.delete('/:id', function(req, res, next){
+   User.findOneAndRemove({_id : req.params.id}, function(err){
+     if(err){
+       return next(err);
+     }
+     req.flash('success', '사용자 계정이 삭제되었습니다.');
+     res.redirect('/');
+   });
+ });
+
+ //회원정보 보기
+ router.get('/:id', function(req, res, next){
+   User.findById(req.params.id, function(err, user){
+     if(err){
+       return next(err);
+     }
+     res.render('users/show', {user : user});
    });
  });
 

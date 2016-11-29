@@ -3,9 +3,6 @@ var express = require('express'),
 var router = express.Router(); 
 
 router.get('/', function(req, res, next){
-    if(err){
-        return next(err);
-    }
     res.render('root/new');
 });
 
@@ -16,7 +13,7 @@ router.post('/', function(req, res, next){
             return res.redirect('back');
         }
         if(user.length !== 0){
-            user.manager = true;
+            user.root = true;
             user.save(function(err){
                 if(err){
                     next(err);
