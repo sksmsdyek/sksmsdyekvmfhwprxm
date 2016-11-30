@@ -1,10 +1,10 @@
 extends ../layout 
 
-block hero-unit 
-  .container 
+
+block main 
+  .containe
+    .row#row
     h1.pageTitle 자신의 숙소를 등록해보세요
-block content 
-  .container 
     form(action = '/host/update', method='POST')
       p
         .row

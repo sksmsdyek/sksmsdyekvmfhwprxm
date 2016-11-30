@@ -1,7 +1,7 @@
 extends ../layout 
 
  
-block content 
+block main 
   .container 
     h1.page-header 회원정보 수정 
     form(action='/users/#{user._id}?_method=PUT', method='POST') 

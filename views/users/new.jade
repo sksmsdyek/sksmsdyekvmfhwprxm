@@ -1,8 +1,9 @@
 extends ../layout 
 
  
-block content 
+block main 
   .container 
+    .row#row
     h1.page-header 회원가입 
     form(action='/users', method='POST') 
       .form-group 

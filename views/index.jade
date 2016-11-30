@@ -1,7 +1,7 @@
 extends layout
 
-block hero-unit 
-  .container
+block main
+  
     if(currentUser) 
       h1 여행은 타이밍이다.
  
@@ -25,9 +25,33 @@ block hero-unit
                     a(href='/host/#{host.id}/detail') 상세보기 
 
     else
-      center
-        h1 여러분의 여행을 책임집니다.
-        p Welcome to HunBnB
-        img(src = '/images/start.jpg' class="img-responsive")
+    block main
+        link(href="/stylesheets/creative.min.css" rel="stylesheet")
+        header
+            .header-content
+                .header-content-inner
+                    h1#homeHeading Take a new trip with HunBnB
+                    |                 
+                    hr
+                    |                 
+                    p
+                        | Start your's new trip and enjoy your life
+                    |                 
+                    a.btn.btn-primary.btn-xl.page-scroll(href='#about') Let's Hosting
+        |     
+        section#about.bg-primary
+            .container
+                .row
+                    .col-lg-8.col-lg-offset-2.text-center
+                        h2.section-heading We've got what you need!
+                        |                     
+                        hr.light
+                        |                     
+                        p.text-faded
+                            | Start Bootstrap has everything you need to get your new website up and running in no time! All of the templates and themes on Start Bootstrap are open source, free to download, and easy to use. No strings attached!
+                        |                     
+                        a.page-scroll.btn.btn-default.btn-xl.sr-button(href='#services') Get Started!
+
+
 
 

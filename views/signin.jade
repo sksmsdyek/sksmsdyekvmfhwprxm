@@ -1,9 +1,8 @@
 extends layout 
 
- 
-block content 
+block main 
   .container
-    .row
+    .row#row
       .col-sm-12 
         h1 Please Login 
 
@@ -30,3 +29,45 @@ block content
           |  
           a.btn.btn-default.btn-mini(href='/reset-password') 비밀번호 재설정 
  
+
+//- block main
+//-   link(href="/stylesheets/freelancer.min.css" rel="stylesheet")
+//-   section#contact
+//-               .container
+//-                   .row
+//-                       .col-lg-12.text-center
+//-                           h2 Please Login
+//-                           |                     
+//-                           hr.star-primary
+//-                   |             
+//-                   .row
+//-                       .col-lg-8.col-lg-offset-2
+//-                           form.form-signin(action='/signin', method='POST')                
+//-                             .row.control-group
+//-                                 .form-group.col-xs-12.floating-label-form-group.controls
+//-                                     label Email Address
+//-                                     |                                 
+//-                                     input(type='email', id='email', name='email', placeholder='Email Address', required, data-validation-required-message='Please enter your email address.', class='form-control')
+//-                                     |                                 
+//-                                     p.help-block.text-danger
+//-                             |                         
+//-                             .row.control-group
+//-                                 .form-group.col-xs-12.floating-label-form-group.controls
+//-                                     label Password
+//-                                     |                                 
+//-                                     input(type='password', id='password', name='password', placeholder='Password', required, data-validation-required-message='Please enter your password.', class='form-control')
+//-                                     |                                 
+//-                                     p.help-block.text-danger
+//-                             |                               
+//-                             .row.control-group
+//-                               button.btn.btn-lg.btn-primary.btn-block(type='submit') 로그인 
+//-                               |  
+//-                               a.btn.btn-info.btn-lg.btn-block(href='/auth/facebook') 
+//-                                 i.fa.fa-facebook.fa-lg 
+//-                                 | &nbsp; &nbsp;Signin with Facebook 
+//-                               hr 
+//-                               a.btn.btn-default.btn-mini(href='/users/new') 회원가입 
+//-                               |  
+//-                               a.btn.btn-default.btn-mini(href='/reset-password') 비밀번호 재설정 
+
+        
