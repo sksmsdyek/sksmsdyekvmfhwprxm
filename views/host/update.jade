@@ -1,13 +1,11 @@
 extends ../layout 
 
- 
 block main 
-  .container 
-    h1 여행은 타이밍이다.
- 
-block content 
-    .row 
-      .col-md-8 
-        img(src = '/images/successHost.jpg' class="img-responsive")
-        h2 숙소등록이 완료되었습니다.
-        a(href = '/') 목록보기
+  .container
+    .row#row
+    h1.pageTitle 여행은 타이밍이다. 
+    
+      .row  
+        .col-md-8 
+          h2 숙소등록이 완료되었습니다.
+          a(href = '/') 목록보기

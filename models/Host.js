@@ -10,8 +10,9 @@ var Schema = new Schema({
     address : {type : String, required : true},
     rule : {type : String, required : true},
     market : {type : String, required : true},
-    user: {type: Schema.Types.ObjectId, index: true, required: true},
-    createdAt : {type : Date, default : Date.now}
+    // user: {type: Schema.Types.ObjectId, index: true, required: true},
+    createdAt : {type : Date, default : Date.now},
+    picturePath : {type : String}
 
 }, {
     toJSON : {virtuals : true},

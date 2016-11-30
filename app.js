@@ -8,6 +8,9 @@ var methodOverride = require('method-override');
 var passport = require('passport');
 var configAuth = require('./config/auth');
 
+
+
+
 //Ssssion
 var session = require('express-session');
 

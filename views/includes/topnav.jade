@@ -13,7 +13,7 @@ nav#mainNav.navbar.navbar-default.navbar-fixed-top
             ul.nav.navbar-nav.navbar-right
                 if(currentUser)
                     li
-                        a.page-scroll(href='#about') About
+                        a.page-scroll(href='#about') Hosting List
                     |         
                     li
                         a(href='/users/#{currentUser._id}') Profile           
@@ -21,10 +21,7 @@ nav#mainNav.navbar.navbar-default.navbar-fixed-top
                     |                     
                     li
                         a(href='/signout') Logout
-                    |                     
-                    li
-                        a(href='/host/index') Hosting
-                
+                    |                        
                     li
                         a(href='/host/management') Management
 

@@ -3,6 +3,9 @@ var router = express.Router();
 var User = require('../models/User');
 var Host = require('../models/Host');
 var Room = require('../models/Room');
+var multer = require('multer');
+var upload = multer({ dest: '/tmp' });
+var fs = require("fs");
 
 function needAuth(req, res, next) { 
   if (req.isAuthenticated()) { 
@@ -26,7 +29,7 @@ router.get('/index', needAuth, function(req, res, next){
 });
 
 //호스팅한 결과 상세보기 눌렀을 시
-router.get('/:id/detail',needAuth, function(req, res, next){
+router.get('/:id/detail', function(req, res, next){
   Host.findById(req.params.id, function(err, host){
       if(err){
         return next(err);
@@ -41,11 +44,21 @@ router.get('/update', needAuth, function(req, res, next){
 });
 
 //호스팅 내용을 데이터베이스에 저장
-router.post('/update', needAuth, function(req, res, next){
+router.post('/update', upload.single('file'),needAuth, function(req, res, next){
 if(!req.body.title || !req.body.content || !req.body.city || !req.body.rule || !req.body.market || !req.body.address || !req.body.cost){
     req.flash('danger', '모두 입력하시오.');
     return res.redirect('back');
   }
+  //사진 업로드
+    var file = './public/images/' + req.file.originalname;
+    var dbPath = 'images/' + req.file.originalname;
+    fs.readFile(req.file.path, function(err, data){
+      fs.writeFile(file, data, function(err){
+        if(err){
+          return next(err);
+        }
+      });
+    });
     var host = new Host({
       title : req.body.title,
       content : req.body.content,
@@ -54,7 +67,8 @@ if(!req.body.title || !req.body.content || !req.body.city || !req.body.rule || !
       address : req.body.address,
       rule : req.body.rule,
       market : req.body.market,
-      deadline : req.body.deadline
+      deadline : req.body.deadline,
+      picturePath : dbPath
     });
     host.save(function(err){
       if(err){

@@ -1,45 +1,90 @@
 extends ../layout
-
 block main
-  .container
-    h1.page-header= host.title
-    h2.page-header= host.user
+    link(href="/stylesheets/freelancer.min.css" rel="stylesheet")
+    .container         
+            
+              .row#row
+                  .col-lg-8.col-lg-offset-2
+                      .modal-body
+                          h2= host.title
+                          |                             
+                          hr.star-primary
+                          |                             
+                          img.img-responsive-centered(src='/#{host.picturePath}', alt = 'picture')
+                          |                             
+                          p
+                            sapn 주소 : #{host.address}
+                          p  
+                            sapn 요금 : #{host.cost}
+                          p
+                            sapn 편의시설 : #{host.market}
+                          p
+                            sapn 이용규칙 : #{host.rule}
+                          p
+                            span 호스팅 날짜 : #{moment(host.createdAt).format('YYYY-MM-DD HH:mm:ss')} 
+                                      
+                          p
+                            sapn 설명 : #{host.content}
+                                        
+                          ul.list-inline.item-details
+                            form.form-inline(action = '/room/update', method = 'POST')
+                              .form
+                                input.form-control(type ='date', id ='startline', name ='startline')
+                                input.form-control(type ='date', id ='deadline', name ='deadline')
+                              .actions
+                                button.btn.btn-primary(type='submit') 예약  
+                                  
+                            button.btn.btn-default(type='button', data-dismiss='modal')
+                              i.fa.fa-times
+                              |  Close
 
-    .row
-      .col-sm-8
-        img(src = '/images/main.jpg' class="img-responsive")
+
+
+          
+
+
+//- block main
+//-   .container
+//-     .row#row
+//-     h1.page-header= host.title
+//-     h2.page-header= host.user
+
+//-     .row
+//-       .col-sm-8
+//-         .thumbnail(style = 'height:200px overflow : hidden');
+//-           img(src = '#{host.file}', alt = 'picture')
       
       
-      .col-sm-2
-        form.form-inline(action = '/room/update', method = 'POST')
-            .form
-              input.form-control(type ='date', id ='startline', name ='startline')
-              input.form-control(type ='date', id ='deadline', name ='deadline')
+//-       .col-sm-2
+//-         form.form-inline(action = '/room/update', method = 'POST')
+//-             .form
+//-               input.form-control(type ='date', id ='startline', name ='startline')
+//-               input.form-control(type ='date', id ='deadline', name ='deadline')
       
-            .actions
-              button.btn.btn-primary(type='submit') 예약    
+//-             .actions
+//-               button.btn.btn-primary(type='submit') 예약    
       
         
 
     
-    .row
-      .col-sm-8
-        p
-          sapn 주소 : #{host.address}
-        p  
-          sapn 요금 : #{host.cost}
-        p
-          sapn 편의시설 : #{host.market}
-        p
-          sapn 이용규칙 : #{host.rule}
-        p
-          span 호스팅 날짜 : #{moment(host.createdAt).format('YYYY-MM-DD HH:mm:ss')} 
+//-     .row
+//-       .col-sm-8
+//-         p
+//-           sapn 주소 : #{host.address}
+//-         p  
+//-           sapn 요금 : #{host.cost}
+//-         p
+//-           sapn 편의시설 : #{host.market}
+//-         p
+//-           sapn 이용규칙 : #{host.rule}
+//-         p
+//-           span 호스팅 날짜 : #{moment(host.createdAt).format('YYYY-MM-DD HH:mm:ss')} 
           
-        p.well(style='white-space:pre;')= host.content
+//-         p.well(style='white-space:pre;')= host.content
         
-    .row
-      .col-sm-3
-        a.btn.btn-default(href='/') 메인으로 돌아가기      
+//-     .row
+//-       .col-sm-3
+//-         a.btn.btn-default(href='/') 메인으로 돌아가기      
 
 
 

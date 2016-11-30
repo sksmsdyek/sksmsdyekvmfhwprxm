@@ -4,7 +4,7 @@ block main
     .container
         div
             ul.nav.nav-tabs(role = 'tablist')
-                li(role='presentation')
+                li.active(role='presentation')
                     a(href='#list') 호스팅 목록
                 |   
                 li(role='presentation')
@@ -16,4 +16,4 @@ block main
                 
                 #reservation.tab-pane(role = 'tabpanel') 나다라바사
 
-     script(type='text/javascript', src='/javascripts/management.js')
+     script(type='text/javascript', src='/javascripts/tab.js')

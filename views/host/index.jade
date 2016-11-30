@@ -2,16 +2,18 @@ extends ../layout
 
 
 block main 
-  .containe
+  .container
     .row#row
     h1.pageTitle 자신의 숙소를 등록해보세요
-    form(action = '/host/update', method='POST')
+    form(action = '/host/update', method='POST', enctype = 'multipart/form-data')
       p
         .row
           .col-sm-8
             .form-group
               label(for = 'title') 제목
               input.form-control(type = 'text', name = 'title', id = 'title', placeholder = 'Title here')
+              label(for = 'file') 첨부 할 사진
+              input.form-control(type = 'file', id = 'file', name = 'file')
               label(for = 'content') 설명
               input.form-control(type = 'text', rows = '20', name = 'content', id = 'content', placeholder = 'Content here')
               label(for = 'address') 주소
