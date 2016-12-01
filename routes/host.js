@@ -45,7 +45,7 @@ router.get('/update', needAuth, function(req, res, next){
 
 //호스팅 내용을 데이터베이스에 저장
 router.post('/update', upload.single('file'),needAuth, function(req, res, next){
-if(!req.body.title || !req.body.content || !req.body.city || !req.body.rule || !req.body.market || !req.body.address || !req.body.cost){
+if(!req.body.title || !req.body.content || !req.body.city || !req.body.rule || !req.body.market || !req.body.address || !req.body.cost || !req.body.addressnumber){
     req.flash('danger', '모두 입력하시오.');
     return res.redirect('back');
   }
@@ -65,6 +65,7 @@ if(!req.body.title || !req.body.content || !req.body.city || !req.body.rule || !
       city : req.body.city,
       cost : req.body.cost,
       address : req.body.address,
+      addressnumber : req.body.addressnumber,
       rule : req.body.rule,
       market : req.body.market,
       deadline : req.body.deadline,

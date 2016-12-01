@@ -43,7 +43,7 @@ module.exports = function(passport) {
     clientID : '489156791255677',
     clientSecret : '29f420f7bc10b5be37a9394a689b02c2',
     //
-    callbackURL : 'http://localhost:3000/auth/facebook/callback',
+    callbackURL : 'https://pacific-badlands-86197.herokuapp.com/',
     profileFields : ["emails", "displayName", "name", "photos"]
   }, function(token, refreshToken, profile, done) {
     console.log(profile);

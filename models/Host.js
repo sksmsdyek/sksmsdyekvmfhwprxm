@@ -8,6 +8,7 @@ var Schema = new Schema({
     city : {type : String, required : true},
     cost : {type : String, required : true},
     address : {type : String, required : true},
+    addressnumber : {type : String, required : true},
     rule : {type : String, required : true},
     market : {type : String, required : true},
     // user: {type: Schema.Types.ObjectId, index: true, required: true},

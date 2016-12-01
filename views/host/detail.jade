@@ -10,10 +10,12 @@ block main
                           |                             
                           hr.star-primary
                           |                             
-                          img.img-responsive-centered(src='/#{host.picturePath}', alt = 'picture')
+                          img.img-responsive(src='/#{host.picturePath}', alt = 'picture')
                           |                             
                           p
                             sapn 주소 : #{host.address}
+                          p
+                            sapn 주소번호 : #{host.addressnumber}
                           p  
                             sapn 요금 : #{host.cost}
                           p
