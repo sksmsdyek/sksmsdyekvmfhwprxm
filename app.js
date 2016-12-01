@@ -8,7 +8,8 @@ var methodOverride = require('method-override');
 var passport = require('passport');
 var configAuth = require('./config/auth');
 
-
+var handlebars = require('express3-handlebars')
+  .create({ defaultLayout:'main' });
 
 
 //Ssssion
