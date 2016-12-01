@@ -4,7 +4,7 @@ extends ../layout
 block main 
   .container 
     .row#row
-    h1.page-header 회원가입 
+    h1.page-header Sign in 
     form(action='/users', method='POST') 
       .form-group 
         label(for='name') Name 
@@ -19,6 +19,6 @@ block main
         label(for='new_password') Password 확인 
         input.form-control(type='password', id='new_password', name='new_password', placeholder='Password') 
       div.form-actions 
-        a.btn.btn-default(href='javascript:window.history.back();') 뒤로  
+        a.btn.btn-default(href='javascript:window.history.back();') Back  
         |  
-        button.btn.btn-primary(type='submit') 회원가입  
+        button.btn.btn-primary(type='submit') Sign in  

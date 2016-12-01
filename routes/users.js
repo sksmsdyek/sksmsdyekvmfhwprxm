@@ -1,6 +1,10 @@
 var express = require('express');
+
 var router = express.Router();
 var User = require('../models/User');
+var Host = require('../models/Host');
+var Room = require('../models/Room');
+
 
 //로그인이 필요할 시
 function needAuth(req, res, next){
@@ -12,7 +16,7 @@ function needAuth(req, res, next){
   }
 }
 
-//회원가입 시 예외 처리
+//회원정보 수정 시 예외 처리
 function validateForm(form, options){
   var name = form.name || '';
   var email = form.email || '';
@@ -160,6 +164,9 @@ router.get('/new', function(req, res, next){
      res.render('users/show', {user : user});
    });
  });
+
+
+
 
 module.exports = router; 
 

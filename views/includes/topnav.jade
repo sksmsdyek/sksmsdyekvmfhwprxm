@@ -23,18 +23,18 @@ nav#mainNav.navbar.navbar-default.navbar-fixed-top
                         a(href='/signout') Logout
                     |                        
                     li
-                        a(href='/host/management') Management
+                        a(href='/host/#{currentUser._id}/management') Management
 
                     if(currentUser.root)
                         li
-                            a(href='/users/root') UserList
+                            a(href='/users/root') User List
                         
                 else
                     li
                         a(href='/users/new') Signin 
                     |   
                     li
-                        a(href='/signin') 로그인
+                        a(href='/signin') Login
 
           
           

@@ -3,9 +3,24 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var Schema = new Schema({
-    deadline : {type :Date, required : true},
-    startline : {type : Date, required : true},
-    user: {type: Schema.Types.ObjectId, index: true, required: true}
+    //
+    guest_id : {type : String, required : true},
+    guest_name : {type : String, required : true},
+    //
+    maker_id : {type : String, required : true},
+    maker_name : {type : String, required : true},
+    //
+    host_id : {type : String, required : true},
+    
+    room_startdate : {type : Date, required : true},
+    room_deaddate : {type : Date, required : true},
+    room_title : {type : String, required : true},
+    room_content : {type : String, required : true},
+    room_cost : {type : String, required : true},
+    room_count : {type : String, required : true},
+    room_city : {type : String, required : true},
+
+    createdAt : {type : Date, default : Date.now}
 }, {
     toJSON : {virtuals : true},
     toObject : {virtuals : true}

@@ -2,18 +2,114 @@ extends ../layout
 
 block main
     .container
-        div
-            ul.nav.nav-tabs(role = 'tablist')
-                li.active(role='presentation')
-                    a(href='#list') 호스팅 목록
-                |   
-                li(role='presentation')
-                    a(href='#reservation') 에약관리
-                |   
+        .row#row
+            h1.pageTitle Management Hosting
+            div
+                ul.nav.nav-tabs(role = 'tablist')
+                    li.active(role='presentation')
+                        a(href='#list', data-toggle="tab") 등록된 방 목록
+                    
+                    li(role='presentation')
+                        a(href='#endreservation', data-toggle="tab") 예약한 방 목록
+                    
+                    li(role='presentation')
+                        a(href='#reservation', data-toggle="tab") 예약 관리
+                    
 
-            .tab-content
-                #list.tab-pane.active(role = 'tabpanel') 가나다라
+
+                .tab-content
+                    #reservation.tab-pane(role = 'tabpanel')
+                        table.table.table-striped.table-bordered
+                            thead
+                                tr
+                                    th 숙소이름
+                                    th 도시
+                                    th 시작 날짜
+                                    th 종료 날짜
+                                    th 예약자 이름
+                                    th 승인 여부
+                            tbody
+                                each roomlist in roomlists
+                                
+                                    tr
+                                        td
+                                             a(href ='/host/#{roomlist.id}/simple_detail')= roomlist.room_title
+                                        td= roomlist.room_city
+                                        td= moment(roomlist.room_startdate).format('YYYY-MM-DD')
+                                        td= moment(roomlist.room_deaddate).format('YYYY-MM-DD')
+                                        td= roomlist.guest_name
+                                        td.a.btn.btn.btn-default(data-id=roomlist.id, class='reject')  거절
+                                        td.a.btn.btn.btn-default(data-id=roomlist.id, class='accept')  승인 
                 
-                #reservation.tab-pane(role = 'tabpanel') 나다라바사
+                    #endreservation.tab-pane(role = 'tabpanel')
+                        table.table.table-striped.table-bordered
+                            thead
+                                tr
+                                    th 숙소이름
+                                    th 도시
+                                    th 시작 날짜
+                                    th 종료 날짜
+                                    th 취소 여부
+                            tbody
+                                each room in rooms
+                                    tr
+                                        td
+                                            a(href ='/host/#{room.id}/simple_detail')= room.room_title
+                                        td= room.room_city
+                                        td= moment(room.room_startdate).format('YYYY-MM-DD')
+                                        td= moment(room.room_deaddate).format('YYYY-MM-DD')
+                                        td.button.btn.btn-primary.btn-large.btn-block(data-id=room.id, class='delete')  취소
+                    
+                    #list.tab-pane.active(role = 'tabpanel')
+                         table.table.table-striped.table-bordered
+                            thead
+                                tr
+                                    th 숙소이름
+                                    th 도시
+                                    th 시작 날짜
+                                    th 종료 날짜
+                                    th 취소 여부
+                            tbody
+                                each host in hosts
+                                    tr
+                                        td
+                                            a(href ='/host/#{host.id}/simple_detail')= host.title
+                                        td= host.city
+                                        td= moment(host.startdate).format('YYYY-MM-DD')
+                                        td= moment(host.deaddate).format('YYYY-MM-DD')
+                                        td.button.btn.btn-primary.btn-large.btn-block(data-id=host.id, class='delete')  취소
 
-     script(type='text/javascript', src='/javascripts/tab.js')
+      
+
+
+
+        form#deleteForm(style='display:none', method="POST")
+                
+        script(type='text/javascript').
+            $(".delete").click(function(e) {
+                var id = $(e.currentTarget).data('id');
+                if (confirm('정말 취소하시겠습니까?')) {
+                $("#deleteForm").attr('action', "/host/" + id + "/delete?_method=DELETE").submit();          
+                }
+                return false;
+            });
+
+   
+        script(type='text/javascript').
+            $(".accept").click(function(e) {
+                var id = $(e.currentTarget).data('id');
+                if (confirm('정말 승인하시겠습니까?')) {
+                $("#deleteForm").attr('action', "/host/" + id + "/accept?_method=POST").submit();          
+                }
+                return false;
+            });
+
+     
+        script(type='text/javascript').
+            $(".reject").click(function(e) {
+                var id = $(e.currentTarget).data('id');
+                if (confirm('정말 거절하시겠습니까?')) {
+                $("#deleteForm").attr('action', "/host/" + id + "/reject?_method=DELETE").submit();          
+                }
+                return false;
+            });

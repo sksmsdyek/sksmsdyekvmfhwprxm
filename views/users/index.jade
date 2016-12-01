@@ -4,14 +4,14 @@ extends ../layout
 block main 
   .container 
     .row#row
-      h1.page-header 회원 목록 
+      h1.page-header User List 
       
       table.table.table-striped.table-bordered 
         thead 
           tr 
-            th 이름 
-            th 이메일 
-            th 가입일시 
+            th Name 
+            th Email 
+            th moment 
             th 
         tbody 
           each user in users 
@@ -21,5 +21,5 @@ block main
               td= user.email 
               td= moment(user.createdAt).format('YYYY-MM-DD HH:mm:ss') 
               td 
-                a.btn.btn-xs.btn-default(href='/users/#{user._id}?_method=DELETE') 강제탈퇴 
-      a.btn.btn-primary(href='/users/new') 사용자추가 
+                a.btn.btn-xs.btn-default(href='/users/#{user._id}?_method=DELETE') Delete 
+      a.btn.btn-primary(href='/users/new') Add list 

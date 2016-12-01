@@ -3,6 +3,12 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var Schema = new Schema({
+    startdate : {type : Date, required : true},
+    deaddate : {type : Date, required : true},
+
+    maker_id : {type : String, required : true},
+    maker_name : {type : String, required : true}, 
+    
     title : {type : String, required : true},
     content : {type : String, required : true},
     city : {type : String, required : true},
@@ -11,10 +17,9 @@ var Schema = new Schema({
     addressnumber : {type : String, required : true},
     rule : {type : String, required : true},
     market : {type : String, required : true},
-    // user: {type: Schema.Types.ObjectId, index: true, required: true},
+    picturePath : {type : String},
     createdAt : {type : Date, default : Date.now},
-    picturePath : {type : String}
-
+    count : {type : String, required : true}
 }, {
     toJSON : {virtuals : true},
     toObject : {virtuals : true}

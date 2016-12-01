@@ -12,7 +12,7 @@ block main
                     p
                         | Start your's new trip and enjoy your life
                     |                 
-                    a.btn.btn-primary.btn-xl.page-scroll(href='/host/index') Let's Hosting
+                    a.btn.btn-primary.btn-xl.page-scroll(href='/host/#{currentUser._id}/index') Let's Hosting
         |     
         section#about.bg-primary
             .container
@@ -55,8 +55,6 @@ block main
                     |                 
                     p
                         | Start your's new trip and enjoy your life
-                    |                 
-                    a.btn.btn-primary.btn-xl.page-scroll(href='/host/index') Let's Hosting
         |     
         section#about.bg-primary
             .container
@@ -68,32 +66,5 @@ block main
                         |                     
                         p.text-faded
                             | Start HunBnB has everything you need to get your new trip and hosting your room 
-
-
-
-//- block main
-  
-//-     if(currentUser) 
-//-       h1 여행은 타이밍이다.
- 
-//-         .row
-//-           .col-me-10
-//-             img(src = '/images/main.jpg' class="img-responsive")
-        
-//-         .col-md-4
-//-           .line
-//-             .thumbnail
-//-               each host in hosts
-//-                 img(src = '#{host.file}', alt = 'picture')
-//-                 |             
-//-                 .caption
-//-                     | 제목 : #{host.title}
-//-                     br
-//-                     | 주소 : #{host.address}
-//-                     br
-//-                     | 도시 : #{host.city}
-//-                     br
-//-                     a(href='/host/#{host.id}/detail') 상세보기 
-
 
 
