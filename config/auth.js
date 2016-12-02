@@ -40,10 +40,10 @@ module.exports = function(passport) {
   passport.use(new FacebookStrategy({
     // 이 부분을 여러분 Facebook App의 정보로 수정해야 합니다.
     // 해로쿠 실행시 바꾸자
-    clientID : '489156791255677',
-    clientSecret : '29f420f7bc10b5be37a9394a689b02c2',
+    clientID : '1160378934077628',
+    clientSecret : 'bec3523a1f5d2b57ec6e6400c009d950',
     //
-    callbackURL : 'https://pacific-badlands-86197.herokuapp.com/',
+    callbackURL : 'https://pacific-badlands-86197.herokuapp.com/auth/facebook/callback',
     profileFields : ["emails", "displayName", "name", "photos"]
   }, function(token, refreshToken, profile, done) {
     console.log(profile);

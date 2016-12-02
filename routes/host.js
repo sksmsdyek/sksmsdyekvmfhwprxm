@@ -76,8 +76,7 @@ router.get('/:id/update', needAuth,  function(req, res, next){
 //숙소등록 완료 누를 시 내용을 데이터베이스에 저장
 //User아이디를 Host 스키마의 userId에 넣어준다.
 router.post('/:id/update', upload.single('file'), function(req, res, next){
-    if(!req.body.title || !req.body.content || !req.body.city || !req.body.rule || !req.body.market || !req.body.address || !req.body.cost || !req.body.addressnumber
-    || !req.body.count || !req.body.startdate || !req.body.deaddate){
+    if(!req.body.title || !req.body.content || !req.body.city || !req.body.rule || !req.body.market || !req.body.address || !req.body.cost || !req.body.addressnumber|| !req.body.count || !req.body.startdate || !req.body.deaddate){
     req.flash('danger', '모두 입력하시오.');
     return res.redirect('back');
   }else if(req.body.startdate > req.body.deaddate){
@@ -143,7 +142,7 @@ router.post('/:id/check', needAuth, function(req, res, next){
           return res.redirect('back');
         }else if(req.body.startdate < host.startdate || req.body.deaddate > host.deaddate){
           req.flash('err', '올바른 예약 날짜를 정하시오.');
-          return res.redirect('back')
+          return res.redirect('back');
         }
       var newRoom = new Room({
         maker_id : host.maker_id,//숙소를 등록한 사람의 아이디를 ROOM스키마의 mkaer_id로 넘겨준다.
@@ -184,7 +183,7 @@ router.get('/:id/management', needAuth, function(req, res, next){
     Room.find({guest_id : req.params.id}, function(err, rooms){//자신이 예약한 방 목록을 보여준다.
       Host.find({maker_id : req.params.id}, function(err, hosts){//방을 등록한 사람에게 자신이 등록한 방을 보여준다.
         res.render('host/management', {user : user, rooms : rooms, hosts : hosts, roomlists : roomlists});
-          })
+          });
       });
     });
   });
