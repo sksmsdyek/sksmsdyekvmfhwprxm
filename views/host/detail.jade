@@ -35,6 +35,30 @@ block main
                             button.btn.btn-default(type='button', data-dismiss='modal')
                               i.fa.fa-times
                               a(href='/')  Close
+
+                              
+             
+             .row
+                h3 댓글
+                table.table
+                  tr
+                    th Name
+                    th Commnet
+                    th time
+
+                  each comment in comments
+                    tr
+                      td= comment.guest_name
+                      td= comment.comment
+                      th= moment(comment.createdAt).format('YYYY/MM/DD')
+
+              .row 
+                if(currentUser)     
+                  form.form-inline(action='/host/' + host.id + '/detail', method='POST')
+                    .form-group
+                      label.sr-only(for='comment') comment
+                      input.form-control(name='comment', size=50, placeholder='comment')
+                    button.btn.btn-info 댓글저장      
     
 
         .col-md-2.side

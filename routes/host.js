@@ -6,6 +6,7 @@ var router = express.Router();
 var User = require('../models/User');
 var Host = require('../models/Host');
 var Room = require('../models/Room');
+var Comments = require('../models/Comments');
 
 
 function needAuth(req, res, next) { 
@@ -18,26 +19,15 @@ function needAuth(req, res, next) {
   } 
 } 
 
-
-// function validateForm(form, options){
-// if(form.startdate < options.startdate){
-//   return 'Check In 날짜 확인하시오';
-// }
-
-// if(form.deaddate > options.deaddate){
-//   return 'Check Out 날짜 확인하시오.'
-// }
-
-//   return null;
-// }
-
 //호스팅한 결과 상세보기 눌렀을 시
 router.get('/:id/detail', function(req, res, next){
   Host.findById(req.params.id, function(err, host){
+     Comments.find({host_id : req.params.id}, function(err, comments){
       if(err){
         return next(err);
       }
-      res.render('host/detail', {host : host});
+      res.render('host/detail', {host : host, comments : comments});
+     });
    });
 });
 
@@ -173,6 +163,28 @@ router.post('/:id/check', needAuth, function(req, res, next){
   });
 });
 
+//댓글달기
+router.post('/:id/detail', needAuth, function(req, res, next){
+  Room.findById(req.params.id, function(err, room){
+    User.findById(req.user.id, function(err, user){
+      var comments = new Comments({
+        host_id : req.params.id,
+        comment : req.body.comment,
+        guest_id : req.user.id,
+        guest_name : user.name
+      });
+      comments.save(function(err){
+        if(err){
+          return next(err);
+        }else{
+          req.flash('success', '댓글작성완료');
+          res.redirect('back');
+        }
+      })
+    });
+  });
+});
+
 // 예약 관리
 router.get('/:id/management', needAuth, function(req, res, next){
   User.findById(req.params.id, function(err, user){
@@ -222,6 +234,8 @@ router.get('/:id/management', needAuth, function(req, res, next){
    });
  });
 });
+
+
 
 
 module.exports = router; 
