@@ -4,10 +4,8 @@ var mongoose = require('mongoose'),
 var Schema = new Schema({
     startdate : {type : Date, required : true},
     deaddate : {type : Date, required : true},
-
     maker_id : {type : String, required : true},
     maker_name : {type : String, required : true}, 
-    
     title : {type : String, required : true},
     content : {type : String, required : true},
     city : {type : String, required : true},

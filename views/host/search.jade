@@ -1,0 +1,22 @@
+extends ../layout 
+
+ 
+block main 
+  .container 
+    .row#row
+      h1.page-header 숙소 목록 
+      
+      table.table.table-striped.table-bordered 
+        thead 
+          tr 
+            th 제목 
+            th 도시 
+            th 요금 
+        tbody 
+          each host in hosts 
+            tr 
+              td 
+                a(href='/host/#{host.id}/detail')= host.title 
+              td= host.city 
+              td= host.cost
+

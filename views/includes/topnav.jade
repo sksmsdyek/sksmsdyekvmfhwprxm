@@ -9,11 +9,12 @@ nav#mainNav.navbar.navbar-default.navbar-fixed-top
             a.navbar-brand(href='/') 
                 i.fa.fa-home             
             a.navbar-brand(href='/') HunBnB
+            
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
             ul.nav.navbar-nav.navbar-right
                 if(currentUser)
                     li
-                        a.page-scroll(href='#about') Hosting List
+                        a.page-scroll(href='#portfolio') Hosting List
                     |         
                     li
                         a(href='/users/#{currentUser._id}') Profile           

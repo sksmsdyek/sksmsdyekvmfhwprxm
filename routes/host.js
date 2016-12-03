@@ -180,7 +180,7 @@ router.post('/:id/detail', needAuth, function(req, res, next){
           req.flash('success', '댓글작성완료');
           res.redirect('back');
         }
-      })
+      });
     });
   });
 });
