@@ -2,7 +2,8 @@ extends ../layout
 
  
 block main 
-  .container 
+  .container
+    .row#row 
     h1.page-header User edit 
     form(action='/users/#{user._id}?_method=PUT', method='POST') 
       .form-group 

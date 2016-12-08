@@ -165,13 +165,14 @@ router.post('/:id/check', needAuth, function(req, res, next){
 
 //댓글달기
 router.post('/:id/detail', needAuth, function(req, res, next){
-  Room.findById(req.params.id, function(err, room){
+  Host.findById(req.params.id, function(err, room){
     User.findById(req.user.id, function(err, user){
       var comments = new Comments({
         host_id : req.params.id,
         comment : req.body.comment,
-        guest_id : req.user.id,
-        guest_name : user.name
+        root_comment : req.body.root_comment,
+        guest_name : user.name,
+        guest_id : user.id
       });
       comments.save(function(err){
         if(err){
@@ -183,6 +184,18 @@ router.post('/:id/detail', needAuth, function(req, res, next){
       });
     });
   });
+});
+
+
+//댓글 삭제
+ router.delete('/:id/commentdelete', function(req, res, next){
+   Comments.findOneAndRemove({_id : req.params.id}, function(err){
+     if(err){
+       return next(err);
+     }
+     req.flash('success', '삭제 완료');
+     res.redirect('back');
+   });
 });
 
 // 예약 관리

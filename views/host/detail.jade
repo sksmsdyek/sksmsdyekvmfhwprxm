@@ -37,29 +37,52 @@ block main
                               i.fa.fa-times
                               a(href='/')  Close
 
+
                               
-             
              .row
-                h3 댓글
-                table.table
-                  tr
-                    th Name
-                    th Commnet
-                    th time
-
-                  each comment in comments
+                if(currentUser.root)
+                  h3 댓글
+                  table.table
                     tr
-                      td= comment.guest_name
-                      td= comment.comment
-                      th= moment(comment.createdAt).format('YYYY/MM/DD')
+                      th Name
+                      th Commnet
+                      th time
+                      
 
-              .row 
-                if(currentUser)     
-                  form.form-inline(action='/host/' + host.id + '/detail', method='POST')
-                    .form-group
-                      label.sr-only(for='comment') comment
-                      input.form-control(name='comment', size=50, placeholder='comment')
-                    button.btn.btn-info 댓글저장      
+                    each comment in comments
+                      tr
+                        td= comment.guest_name
+                        td= comment.comment
+                        td= moment(comment.createdAt).format('YYYY/MM/DD')
+                      tr
+                        td.button.btn.btn-primary(data-id=comment.id, class='delete') 삭제
+                        td= comment.root_comment
+                      tr    
+                        td.form.form-inline(action='/host/' + host.id + '/detail', method='POST')
+                            .form-group
+                              input.form-control(name='root_comment', size=15, placeholder='comment')
+                            button.btn.btn-info 답글저장
+                        
+
+                else if(currentUser)
+                  h3 댓글
+                  table.table
+                    tr
+                      th Name
+                      th Commnet
+                      th time
+
+                    each comment in comments
+                      tr
+                        td= comment.guest_name
+                        td= comment.comment
+                        td= moment(comment.createdAt).format('YYYY/MM/DD')
+
+                  .row  
+                      form.form-inline(action='/host/' + host.id + '/detail', method='POST')
+                        .form-group
+                          input.form-control(name='comment', size=50, placeholder='comment')
+                        button.btn.btn-info 댓글저장
     
 
         .col-md-2.side
@@ -67,3 +90,13 @@ block main
 
 
         
+        form#deleteForm(style='display:none', method="POST")
+                
+        script(type='text/javascript').
+            $(".delete").click(function(e) {
+                var id = $(e.currentTarget).data('id');
+                if (confirm('정말 삭제하시겠습니까?')) {
+                $("#deleteForm").attr('action', "/host/" + id + "/commentdelete?_method=DELETE").submit();          
+                }
+                return false;
+            });

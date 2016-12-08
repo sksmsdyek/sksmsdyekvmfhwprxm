@@ -1,18 +1,19 @@
 extends ../layout 
 
  
-block content 
-  .container 
-    p 
-      b 관리자 e-mail을 입력하시오. 
-    p 
-    hr 
-    p 
-    form(action='/root', method='POST') 
-      .form-group 
-        label(for='email') Email address 
-        input.form-control(type='email', id='email', name='email', placeholder='Email') 
-        p 
-        hr 
-        p 
-        button.btn.btn-primary.btn-block(type='submit') 관리자등록  
+block main 
+  .container
+    .row#row 
+      p 
+        b 관리자 e-mail을 입력하시오. 
+      p 
+      hr 
+      p 
+      form(action='/root', method='POST') 
+        .form-group 
+          label(for='email') Email address 
+          input.form-control(type='email', id='email', name='email', placeholder='Email') 
+          p 
+          hr 
+          p 
+          button.btn.btn-primary.btn-block(type='submit') 관리자등록  

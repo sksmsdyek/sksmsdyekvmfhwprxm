@@ -1,17 +1,16 @@
 var express = require('express');
-
 var router = express.Router();
 var User = require('../models/User');
 var Host = require('../models/Host');
 var Room = require('../models/Room');
 
 
-//로그인이 필요할 시
+//로그인이 필요하다고 알려준다.
 function needAuth(req, res, next){
   if(req.isAuthenticated()){
     next();
   }else {
-    req.flash('danger', '로그인 하시오');
+    req.flash('danger', '로그인 하시오.');
     res.redirect('/signin');
   }
 }
