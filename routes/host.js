@@ -272,6 +272,19 @@ router.get('/:id/management', needAuth, function(req, res, next){
  });
 });
 
+//등록한 방 삭제
+ router.delete('/:id/room_delete' , function(req, res, next){
+  Host.findById(req.params.id, function(err, host){
+   Host.findOneAndRemove({_id : req.params.id}, function(err){
+     if(err){
+       return next(err);
+     }
+     req.flash('success', '삭제 완료');
+     res.redirect('back');
+   });
+ });
+});
+
 
 
 

@@ -77,7 +77,7 @@ block main
                                         td= host.city
                                         td= moment(host.startdate).format('YYYY-MM-DD')
                                         td= moment(host.deaddate).format('YYYY-MM-DD')
-                                        td.button.btn.btn-primary.btn-large.btn-block(data-id=host.id, class='delete')  취소
+                                        td.button.btn.btn-primary.btn-large.btn-block(data-id=host.id, class='room_delete')  삭제
 
       
 
@@ -93,8 +93,15 @@ block main
                 }
                 return false;
             });
-
-   
+        script(type='text/javascript').
+                $(".room_delete").click(function(e) {
+                    var id = $(e.currentTarget).data('id');
+                    if (confirm('정말 방을 삭제 하시겠습니까?')) {
+                    $("#deleteForm").attr('action', "/host/" + id + "/room_delete?_method=DELETE").submit();          
+                    }
+                    return false;
+                });
+            
         script(type='text/javascript').
             $(".accept").click(function(e) {
                 var id = $(e.currentTarget).data('id');
@@ -104,7 +111,6 @@ block main
                 return false;
             });
 
-     
         script(type='text/javascript').
             $(".reject").click(function(e) {
                 var id = $(e.currentTarget).data('id');
