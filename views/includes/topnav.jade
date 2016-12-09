@@ -12,30 +12,27 @@ nav#mainNav.navbar.navbar-default.navbar-fixed-top
             
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
             ul.nav.navbar-nav.navbar-right
-                if(currentUser)
+                if(currentUser)    
                     li
-                        a.page-scroll(href='#portfolio') Hosting List
-                    |         
-                    li
-                        a(href='/users/#{currentUser._id}') Profile           
+                        a(href='/users/#{currentUser._id}') 프로필           
                     
                     |                     
                     li
-                        a(href='/signout') Logout
+                        a(href='/signout') 로그아웃
                     |                        
                     li
-                        a(href='/host/#{currentUser._id}/management') Management
+                        a(href='/host/#{currentUser._id}/management') 관리
 
                     if(currentUser.root)
                         li
-                            a(href='/users/root') User List
+                            a(href='/users/root') 사용자 목록
                         
                 else
                     li
-                        a(href='/users/new') Signin 
+                        a(href='/users/new') 회원가입 
                     |   
                     li
-                        a(href='/signin') Login
+                        a(href='/signin') 로그인
 
           
           

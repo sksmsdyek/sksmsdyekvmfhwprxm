@@ -55,13 +55,13 @@ block main
                         td= comment.comment
                         td= moment(comment.createdAt).format('YYYY/MM/DD')
                       tr
-                        td.button.btn.btn-primary(data-id=comment.id, class='delete') 삭제
                         td= comment.root_comment
-                      tr    
-                        td.form.form-inline(action='/host/' + host.id + '/detail', method='POST')
-                            .form-group
-                              input.form-control(name='root_comment', size=15, placeholder='comment')
-                            button.btn.btn-info 답글저장
+                        td.button.btn.btn-primary(data-id=comment.id, class='delete') 삭제   
+                      tr
+                          form.form-inline(action='/host/' + comments.id + '/detail', method='POST')
+                              .form-group
+                                input.form-control(name='root_comment', size=15, placeholder='comment')
+                              button.btn.btn-info 답글저장
                         
 
                 else if(currentUser)
@@ -77,6 +77,9 @@ block main
                         td= comment.guest_name
                         td= comment.comment
                         td= moment(comment.createdAt).format('YYYY/MM/DD')
+
+                      tr
+                        td= comment.root_comment
 
                   .row  
                       form.form-inline(action='/host/' + host.id + '/detail', method='POST')

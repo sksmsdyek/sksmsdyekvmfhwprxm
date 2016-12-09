@@ -164,7 +164,7 @@ router.post('/:id/check', needAuth, function(req, res, next){
 });
 
 //댓글달기
-router.post('/:id/detail', needAuth, function(req, res, next){
+router.post('/:id/detail', function(req, res, next){
   Host.findById(req.params.id, function(err, room){
     User.findById(req.user.id, function(err, user){
       var comments = new Comments({
@@ -185,6 +185,30 @@ router.post('/:id/detail', needAuth, function(req, res, next){
     });
   });
 });
+
+router.post('/:id/detail', function(req, res, next){
+  Comments.findById(req.params.id, function(err, room){
+    User.findById(req.user.id, function(err, user){
+      var comments = new Comments({
+        host_id : req.params.id,
+        comment : req.body.comment,
+        root_comment : req.body.root_comment,
+        guest_name : user.name,
+        guest_id : user.id
+      });
+      comments.save(function(err){
+        if(err){
+          return next(err);
+        }else{
+          req.flash('success', '댓글작성완료');
+          res.redirect('back');
+        }
+      });
+    });
+  });
+});
+
+
 
 
 //댓글 삭제
