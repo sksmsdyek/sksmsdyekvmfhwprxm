@@ -33,7 +33,7 @@ block main
                                 
                                     tr
                                         td
-                                             a(href ='/host/#{roomlist.id}/simple_detail')= roomlist.room_title
+                                            a(href ='/host/#{roomlist.id}/simple_detail')= roomlist.room_title
                                         td= roomlist.room_city
                                         td= moment(roomlist.room_startdate).format('YYYY-MM-DD')
                                         td= moment(roomlist.room_deaddate).format('YYYY-MM-DD')

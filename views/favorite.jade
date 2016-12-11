@@ -1,0 +1,35 @@
+extends layout 
+
+ 
+block main 
+  .container 
+    .row#row
+      h1.page-header 즐겨찾기 목록 
+      
+      table.table.table-striped.table-bordered 
+        thead 
+          tr 
+            th 제목 
+            th 도시 
+            th 요금 
+            th 삭제 여부
+        tbody 
+          each favorite in favorites 
+            tr 
+              td 
+                a(href='/host/#{favorite.host_id}/detail')= favorite.room_title 
+              td= favorite.room_city 
+              td= favorite.room_cost
+              td.button.btn.btn-primary.btn-large.btn-block(data-id=favorite.id, class='delete') 삭제
+
+        form#deleteForm(style='display:none', method="POST")
+                
+        script(type='text/javascript').
+            $(".delete").click(function(e) {
+                var id = $(e.currentTarget).data('id');
+                if (confirm('정말 삭제하시겠습니까?')) {
+                $("#deleteForm").attr('action', "/host/" + id + "/favorite_delete?_method=DELETE").submit();          
+                }
+                return false;
+            });
+

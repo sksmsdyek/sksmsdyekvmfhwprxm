@@ -1,0 +1,17 @@
+extends ../layout 
+
+block main 
+  .container
+    .row#row
+      .col-sm-12 
+        h1 답글을 달아주세요 
+
+    .row#row
+      .col-sm-12
+        form.form-signin(action='/host/#{comment.id}/detail', method='POST') 
+          label(for='email', class='sr-only') 답글 
+          input( 
+            type='text', id='root_comment', name='root_comment', class='form-control',  
+            placeholder='답글', required, autofocus 
+          ) 
+          button.btn.btn-lg.btn-primary.btn-block(type='submit') 답글작성 

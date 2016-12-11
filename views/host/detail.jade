@@ -32,49 +32,53 @@ block main
                             span 호스팅 날짜 : #{moment(host.createdAt).format('YYYY-MM-DD HH:mm:ss')}          
                           p  
                             span 예약 가능 날짜 : #{moment(host.startdate).format('YYYY-MM-DD') + "부터" + moment(host.deaddate).format('YYYY-MM-DD')}
-                          p                     
-                            button.btn.btn-default(type='button', data-dismiss='modal')
-                              i.fa.fa-times
-                              a(href='/')  Close
+                                               
+                          button.btn.btn-default(type='button', data-dismiss='modal')
+                            i.fa.fa-times
+                            a(href='/')  Close
+                          form(action = '/host/#{host.id}/favorite', method = 'post')
+                            button.btn.btn-default(type='submit', data-dismiss='modal', name = 'favorite') 즐겨찾기
+                        
+
 
               .row
-                //script(src='//apis.daum.net/maps/maps3.js?apikey=f5d6b2997da77f349318f9d55088c536')
-                script.
-                    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-                    mapOption = {
-                    center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
-                    level: 5 // 지도의 확대 레벨
-                    };
-                    //지도를 미리 생성
-                    var map = new daum.maps.Map(mapContainer, mapOption);
-                    //주소-좌표 변환 객체를 생성
-                    var geocoder = new daum.maps.services.Geocoder();
-                    //마커를 미리 생성
-                    var marker = new daum.maps.Marker({
-                    position: new daum.maps.LatLng(37.537187, 127.005476),
-                    map: map
-                    });
-                    function sample5_execDaumPostcode() {
-                    // 주소로 좌표를 검색
-                    geocoder.addr2coord('#{host.address}', function(status, result) {
-                    // 정상적으로 검색이 완료됐으면
-                    if (status === daum.maps.services.Status.OK) {
-                    // 해당 주소에 대한 좌표를 받아서
-                    var coords = new daum.maps.LatLng(result.addr[0].lat, result.addr[0].lng);
-                    // 지도를 보여준다.
-                    mapContainer.style.display = "block";
-                    map.relayout();
-                    // 지도 중심을 변경한다.
-                    map.setCenter(coords);
-                    // 마커를 결과값으로 받은 위치로 옮긴다.
-                    marker.setPosition(coords)
-                    }
-                    });
-                    }
-                    }).open();
-                    }
+                .col-sm-4
+                  #map(style='width:100%;height:350px;')
+                  script(type='text/javascript', src='//apis.daum.net/maps/maps3.js?apikey=f5d6b2997da77f349318f9d55088c536&libraries=services')
+                  script.
+                      var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                      mapOption = {
+                      center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                      level: 3 // 지도의 확대 레벨
+                      };
+                      // 지도를 생성합니다
+                      var map = new daum.maps.Map(mapContainer, mapOption);
+                      // 주소-좌표 변환 객체를 생성합니다
+                      var geocoder = new daum.maps.services.Geocoder();
+                      // 주소로 좌표를 검색합니다
+                      geocoder.addr2coord('#{host.address}', function(status, result) {
+                      // 정상적으로 검색이 완료됐으면
+                      if (status === daum.maps.services.Status.OK) {
+                      var coords = new daum.maps.LatLng(result.addr[0].lat, result.addr[0].lng);
+                      // 결과값으로 받은 위치를 마커로 표시합니다
+                      var marker = new daum.maps.Marker({
+                      map: map,
+                      position: coords
+                      });
+                      // 인포윈도우로 장소에 대한 설명을 표시합니다
+                      var infowindow = new daum.maps.InfoWindow({
+                      content: '<div style="width:150px;text-align:center;padding:6px 0;"> #{host.title} </div>'
+                      });
+                      infowindow.open(map, marker);
+                      // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                      map.setCenter(coords);
+                      }
+                      });
+
+
                  
              .row
+              .col-sm-4
                 if(currentUser.root)
                   h3 댓글
                   table.table
@@ -91,14 +95,10 @@ block main
                         td= moment(comment.createdAt).format('YYYY/MM/DD')
                       tr
                         td= comment.root_comment
-                        td.button.btn.btn-primary(data-id=comment.id, class='delete') 삭제   
-                      tr
-                          form.form-inline(action='/host/' + comments.id + '/detail', method='POST')
-                              .form-group
-                                input.form-control(name='root_comment', size=15, placeholder='comment')
-                              button.btn.btn-info 답글저장
-                        
-
+                        td
+                            a(href='/host/#{comment.id}/detail/comment') 답글달기
+                        td.button.btn.btn-primary(data-id=comment.id, class='delete') 삭제
+   
                 else if(currentUser)
                   h3 댓글
                   table.table

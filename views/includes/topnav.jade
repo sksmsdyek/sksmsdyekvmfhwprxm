@@ -22,6 +22,11 @@ nav#mainNav.navbar.navbar-default.navbar-fixed-top
                     |                        
                     li
                         a(href='/host/#{currentUser._id}/management') 관리
+                   
+                    li
+                        a(href='/host/#{currentUser._id}/favorite') 즐겨찾기
+                    li
+                        a(href='/host/#{currentUser._id}/point') 추천숙소
 
                     if(currentUser.root)
                         li

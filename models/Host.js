@@ -16,7 +16,7 @@ var Schema = new Schema({
     market : {type : String, required : true},
     picturePath : {type : String},
     createdAt : {type : Date, default : Date.now},
-    count : {type : String, required : true}
+    count : {type : String, required : true},
 }, {
     toJSON : {virtuals : true},
     toObject : {virtuals : true}

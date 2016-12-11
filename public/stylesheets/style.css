@@ -30,6 +30,18 @@ a {
   
 }
 
+  .date{
+    width:45%;
+    margin-right:20px;
+    float:left;
+  }
+
+#div_map{
+  width:0%;
+  height:100%;
+  float:right;
+
+}
 
 
 

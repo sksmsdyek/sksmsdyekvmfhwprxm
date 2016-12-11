@@ -5,6 +5,7 @@ var fs = require("fs");
 var router = express.Router();
 var User = require('../models/User');
 var Host = require('../models/Host');
+var Favorite = require('../models/Favorite');
 var Room = require('../models/Room');
 var Comments = require('../models/Comments');
 
@@ -163,7 +164,8 @@ router.post('/:id/check', needAuth, function(req, res, next){
   });
 });
 
-//댓글달기
+
+//사용자가 답변 단것을 db에 저장한다.
 router.post('/:id/detail', function(req, res, next){
   Host.findById(req.params.id, function(err, room){
     User.findById(req.user.id, function(err, user){
@@ -186,6 +188,13 @@ router.post('/:id/detail', function(req, res, next){
   });
 });
 
+router.get('/:id/detail/comment', function(req, res, next){
+  Comments.findById(req.params.id, function(err, comment){
+    res.render('host/comment',{comment : comment});
+  });
+});
+
+//관리자가 댓글단 경우 db저장
 router.post('/:id/detail', function(req, res, next){
   Comments.findById(req.params.id, function(err, room){
     User.findById(req.user.id, function(err, user){
@@ -200,16 +209,13 @@ router.post('/:id/detail', function(req, res, next){
         if(err){
           return next(err);
         }else{
-          req.flash('success', '댓글작성완료');
-          res.redirect('back');
+          req.flash('success', '답글작성완료');
+          res.redirect('/');
         }
       });
     });
   });
-});
-
-
-
+ });
 
 //댓글 삭제
  router.delete('/:id/commentdelete', function(req, res, next){
@@ -285,6 +291,54 @@ router.get('/:id/management', needAuth, function(req, res, next){
  });
 });
 
+//favorite 누를시
+router.post('/:id/favorite', function(req, res, next){
+ Host.findById(req.params.id, function(err, host){
+   User.findById(req.user.id, function(err, user){
+     favorite = new Favorite({
+      host_id : req.params.id,
+      guest_id : req.user.id,
+      room_city : host.city,
+      room_cost : host.cost,
+      room_title : host.title
+     });
+     favorite.save(function(err){
+      if(err){
+      return next(err);
+    }
+    req.flash('success', '등록 완료.');
+    res.redirect('back');
+      });
+     });
+   }); 
+});
+
+//favorite 누를시
+router.get('/:id/favorite', function(req, res, next){
+  User.findById(req.params.id, function(err, user){
+   Favorite.find({guest_id : req.params.id}, function(err, favorites){
+   if(err){
+     return next(err);
+   }
+    res.render('favorite', {user : user, favorites : favorites});
+
+     });
+   }); 
+});
+
+//favorite 삭제
+ router.delete('/:id/favorite_delete', function(req, res, next){
+   Favorite.findById(req.params.id, function(err, favorite){
+    Favorite.findOneAndRemove({_id : req.params.id}, function(err){
+
+     if(err){
+       return next(err);
+     }
+     req.flash('success', '삭제 완료');
+     res.redirect('back');
+     });
+   });
+});
 
 
 

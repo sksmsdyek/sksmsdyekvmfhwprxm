@@ -4,19 +4,53 @@ extends ../layout
 block main 
   .container 
     .row#row
-      h1.page-header 숙소 목록 
-      
-      table.table.table-striped.table-bordered 
-        thead 
-          tr 
-            th 제목 
-            th 도시 
-            th 요금 
-        tbody 
-          each host in hosts 
-            tr 
-              td 
-                a(href='/host/#{host.id}/detail')= host.title 
-              td= host.city 
-              td= host.cost
+      h1.page-header 도시별 목록
+        each host in hosts
+          .thumbnail(style="width:150px;height:150px")
+            img.img-responsive(src=host.picturePath alt="사진")
+          .caption
+            h5
+              a(href='/host/#{host.id}/detail')= host.title
+            h5= host.city
+            h5= host.cost
+            h5= host.address
+
+          .col-sm-5.com-sm-offset-6#_row
+            #map(style='width:100%;height:250px;')
+            script(type='text/javascript', src='//apis.daum.net/maps/maps3.js?apikey=f5d6b2997da77f349318f9d55088c536&libraries=services')
+            script.
+                var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                mapOption = {
+                center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                level: 10 // 지도의 확대 레벨
+                };
+                // 지도를 생성합니다
+                var map = new daum.maps.Map(mapContainer, mapOption);
+                        // 주소-좌표 변환 객체를 생성합니다
+                var geocoder = new daum.maps.services.Geocoder();
+                  // 주소로 좌표를 검색합니다
+                geocoder.addr2coord('#{host.address}', function(status, result) {
+                  // 정상적으로 검색이 완료됐으면
+                if (status === daum.maps.services.Status.OK) {
+                var coords = new daum.maps.LatLng(result.addr[0].lat, result.addr[0].lng);
+                  // 결과값으로 받은 위치를 마커로 표시합니다
+                var marker = new daum.maps.Marker({
+                map: map,
+                position: coords
+                });
+                  // 인포윈도우로 장소에 대한 설명을 표시합니다
+                var infowindow = new daum.maps.InfoWindow({
+                content: '<div style="width:150px;text-align:center;padding:6px 0;"> #{host.title} </div>'
+                });
+                infowindow.open(map, marker);
+                  // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                map.setCenter(coords);
+                }
+                });
+
+          
+
+
+    
+    
 
