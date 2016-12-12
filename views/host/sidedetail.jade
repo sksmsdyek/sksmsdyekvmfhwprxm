@@ -2,23 +2,25 @@ block main
     link(href="/stylesheets/style.css" rel="stylesheet")
     .row#size
     h3 예약
-    h4="￦" + host.cost
+    h4="￦" + (host.cost)*(host.count) + + parseInt(host.cost)*0.2 + parseInt(host.cost)*0.1
     form(action = '/host/#{host.id}/check', method = 'post')
-        p
-            .form-group
-                #datetimepicker6.input-group.date
-                    input.form-control(type='text', id = "datetimepicker6", name = 'startdate')
-                    |                 
-                    span.input-group-addon
-                        span.glyphicon.glyphicon-calendar
+        label(for = 'startdate') 체크인
+            p
+                .form-group
+                    #datetimepicker6.input-group.date
+                        input.form-control(type='text', id = "datetimepicker6", name = 'startdate')
+                        |                 
+                        span.input-group-addon
+                            span.glyphicon.glyphicon-calendar
     
-        p     
-            .form-group
-                #datetimepicker7.input-group.date
-                    input.form-control(type='text',id = 'datetimepicker7', name = 'deaddate')
-                    |                 
-                    span.input-group-addon
-                        span.glyphicon.glyphicon-calendar
+        label(for = 'deaddate') 체크 아웃  
+            p
+                .form-group
+                        #datetimepicker7.input-group.date
+                            input.form-control(type='text',id = 'datetimepicker7', name = 'deaddate')
+                            |                 
+                            span.input-group-addon
+                                span.glyphicon.glyphicon-calendar
         
             script(type='text/javascript').
                 $(function () {
@@ -33,9 +35,8 @@ block main
                 $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
                 });
                 });
-
+        label(for = 'count') 숙박 인원    
             p      
-                label(for = 'count') 숙박 인원
                     select.form-control(name='count')
                         option(value='1', selected) 1
                         option(value='2') 2
@@ -55,9 +56,17 @@ block main
                 button.btn.btn-primary.btn-large.btn-block(type='submit') 예약 요청
 
             p
-                a.btn.btn-primary(data-toggle='collapse', href='#collapseExample', aria-expanded='false', aria-controls='collapseExample')
+                a.btn.btn-primary(data-toggle='collapse', href='#collapseExample2', aria-expanded='false', aria-controls='collapseExample2')
                     | 자세히보기
-                #collapseExample.collapse
+                #collapseExample2.collapse
                     .well
-                        | 가격 : #{host.cost}
+                        p
+                            span= '추가 인원 요금 : ₩' + parseInt(host.cost)*0.3 +'/박' + (host.count) +'명 추가시'
+                        p
+                            span= '청소비 : ₩' + parseInt(host.cost)*0.1
+                        p
+                            span= '보증금 : ₩' + parseInt(host.cost)*0.2
+                        p
+                            span= '기본요금 : ₩' + (host.cost)*(host.count)
+
 

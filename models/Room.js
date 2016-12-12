@@ -11,6 +11,8 @@ var Schema = new Schema({
     //
     host_id : {type : String, required : true},
     //
+    reservationState : {type : Boolean, default : false},
+    //
     room_startdate : {type : Date, required : true},
     room_deaddate : {type : Date, required : true},
     room_title : {type : String, required : true},
@@ -18,7 +20,7 @@ var Schema = new Schema({
     room_cost : {type : String, required : true},
     room_count : {type : String, required : true},
     room_city : {type : String, required : true},
-
+    
     createdAt : {type : Date, default : Date.now}
 }, {
     toJSON : {virtuals : true},

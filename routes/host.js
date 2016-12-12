@@ -150,8 +150,6 @@ router.post('/:id/check', needAuth, function(req, res, next){
         guest_id : user.id,//예약한 사람의 아이디를 넘겨준다.
         guest_name : user.name//예약한 사람의 이름을 넘겨준다.
       });
-      host.reservation_count++;
-      host.save(function(err){
       room.save(function(err){
         if(err){
           return next(err);
@@ -159,7 +157,6 @@ router.post('/:id/check', needAuth, function(req, res, next){
           req.flash('success', '예약 완료');
           res.redirect('/');
         }
-        });
       });
     });
   });
@@ -234,15 +231,15 @@ router.post('/:id/detail', function(req, res, next){
   });
 });
 
-// 예약 관리
+// 예약 관리 화면
 router.get('/:id/management', needAuth, function(req, res, next){
   User.findById(req.params.id, function(err, user){
     if(err){
       return next(err);
     }
-  Room.find({maker_id : req.params.id}, function(err, roomlists){//자신의 방에 누가 예약했는지 알 수 있다.
+  Host.find({maker_id : req.params.id}, function(err, hosts){//방을 등록한 사람에게 자신이 등록한 방을 보여준다.
     Room.find({guest_id : req.params.id}, function(err, rooms){//자신이 예약한 방 목록을 보여준다.
-      Host.find({maker_id : req.params.id}, function(err, hosts){//방을 등록한 사람에게 자신이 등록한 방을 보여준다.
+      Room.find({maker_id : req.params.id}, function(err, roomlists){//자신의 방에 누가 예약했는지 알 수 있다.
         res.render('host/management', {user : user, rooms : rooms, hosts : hosts, roomlists : roomlists});
           });
       });
@@ -252,26 +249,35 @@ router.get('/:id/management', needAuth, function(req, res, next){
 
 //예약 취소
  router.delete('/:id/delete', function(req, res, next){
-  Room.findById(req.params.id, function(err, host){
-   Room.findOneAndRemove({_id : req.params.id}, function(err){
+  Room.findById(req.params.id, function(err, room){
+   Host.update({_id : room.host_id},{$inc:{ "reservation_count" : -1}}, function(err, room){
+    Room.findOneAndRemove({_id : req.params.id}, function(err){ 
      if(err){
        return next(err);
      }
-     req.flash('success', '예약 취소');
+     req.flash('success', '예약 취소 완료');
      res.redirect('back');
+     });
    });
  });
 });
 
-//승인
+//예약 승인
  router.post('/:id/accept', function(req, res, next){
-  Room.findOneAndRemove({_id : req.params.id}, function(err, room){
+  Room.findById(req.params.id, function(err, roomlists){
+    Room.update({_id : req.params.id, reservationState : false}, {$set : {reservationState : true}}, function(err, states){
+      Host.update({_id : roomlists.host_id}, {$inc : {'reservation_count' : 1}}, function(err, host){
+        if(err){
+          return next(err);
+        }
      req.flash('success', '승인 완료');
      res.redirect('back');
+      });
+    });
  });
 });
 
-//거절
+//예약 거절
  router.delete('/:id/reject', function(req, res, next){
   Room.findById(req.params.id, function(err, host){
    Room.findOneAndRemove({_id : req.params.id}, function(err){
@@ -280,8 +286,8 @@ router.get('/:id/management', needAuth, function(req, res, next){
      }
      req.flash('success', '거절 완료');
      res.redirect('back');
-   });
- });
+     });
+    });
 });
 
 //등록한 방 삭제

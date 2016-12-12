@@ -1,38 +1,103 @@
 extends ../layout
 block main
     link(href="/stylesheets/freelancer.min.css" rel="stylesheet")
-    .container         
-            
-              .row#row
-                  .col-lg-8.col-lg-offset-2
-                      .modal-body
-                          h2= host.title
-                          |                             
-                          hr.star-primary
-                          |                             
-                          img.img-responsive(src='/#{host.picturePath}', alt = 'picture')
-                          |                             
-                          p
-                            sapn 주소 : #{host.address}
-                          p
-                            sapn 주소번호 : #{host.addressnumber}
-                          p
-                            sapn 요금 : #{host.cost}
-                          p
-                            sapn 편의시설 : #{host.market}  
-                          p
-                            sapn 이용규칙 : #{host.rule}  
-                          p
-                            sapn 설명 : #{host.content}
+    .container
+      .row#row         
+        .col-md-8.col-xs-8
+          .modal-body
+            img.img-responsive(src='/#{host.picturePath}', alt = 'picture')
+            h2= host.title
+            h3= host.city
+            |                             
+            hr.star-primary                           
+            span#shape.glyphicon.glyphicon-home(aria-hidden='true') 집전체
+            span#shape.glyphicon.glyphicon-user(aria-hidden='true') 인원#{host.count}명
+            span#shape.glyphicon.glyphicon-usd(aria-hidden='true') #{host.cost}원
+            span#shape.glyphicon.glyphicon-cutlery(aria-hidden='true') 편의시설#{host.market}    
+            hr.star-primary
+            p
+              h3 주소&주소번호
+            p
+              span #{host.address}
+              sapn #{host.addressnumber}
+            hr.star-primary
+            p
+              h3 숙소
+            p
+              span 숙박 가능 인원 #{host.count}
+            p
+              span 체크인 #{host.startdate}
+            p
+              span 체크아웃 #{host.deaddate}
+            p
+              a.page-scroll(href='#rule') 숙소 이용규칙
+            hr.star-primary
+            p
+              h3 편의시설
+            p
+              span #{host.market}
+            hr.star-primary
+            p
+              h3 가격
+            p
+              span= '₩' + (host.cost)
+            p
+              span= '추가 인원 요금 : ₩' + parseInt(host.cost)*0.3 +'/박' + (host.count) +'명 추가시'
+            p
+              span= '청소비 : ₩' + parseInt(host.cost)*0.1
+            p
+              span= '보증금 : ₩' + parseInt(host.cost)*0.2
+            hr.star-primary
+            p
+              h3 설명
+            p
+              a.btn.btn-primary(data-toggle='collapse', href='#collapseExample', aria-expanded='false', aria-controls='collapseExample')
+                  | 자세히 보기
+              #collapseExample.collapse
+                  .well
+                      | #{host.content}
+            hr.star-primary#rule
+            p
+              h3 숙소 이용규칙 
+            p
+              span #{host.rule}
+            hr.star-primary
+            p
+              button.btn.btn-default(type='button', data-dismiss='modal')
+                i.fa.fa-times
+                a(href='/')  Close
 
-                          p
-                            sapn 최대 숙박 인원 : #{host.count}
-                          p
-                            span 호스팅 날짜 : #{moment(host.createdAt).format('YYYY-MM-DD HH:mm:ss')}          
-                          p  
-                            span 예약 가능 날짜 : #{moment(host.startdate).format('YYYY-MM-DD') + "부터" + moment(host.deaddate).format('YYYY-MM-DD')}
-                          p                     
-                            button.btn.btn-default(type='button', data-dismiss='modal')
-                              i.fa.fa-times
-                              a(href='/')  Close
+      .row#row
+        .col-md-8.col-xs-8
+          #map(style='width:100%;height:350px;')
+          script(type='text/javascript', src='//apis.daum.net/maps/maps3.js?apikey=f5d6b2997da77f349318f9d55088c536&libraries=services')
+          script.
+              var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+              mapOption = {
+              center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+              level: 3 // 지도의 확대 레벨
+              };
+              // 지도를 생성합니다
+              var map = new daum.maps.Map(mapContainer, mapOption);
+              // 주소-좌표 변환 객체를 생성합니다
+              var geocoder = new daum.maps.services.Geocoder();
+              // 주소로 좌표를 검색합니다
+              geocoder.addr2coord('#{host.address}', function(status, result) {
+              // 정상적으로 검색이 완료됐으면
+              if (status === daum.maps.services.Status.OK) {
+              var coords = new daum.maps.LatLng(result.addr[0].lat, result.addr[0].lng);
+              // 결과값으로 받은 위치를 마커로 표시합니다
+              var marker = new daum.maps.Marker({
+              map: map,
+              position: coords
+              });
+              // 인포윈도우로 장소에 대한 설명을 표시합니다
+              var infowindow = new daum.maps.InfoWindow({
+              content: '<div style="width:150px;text-align:center;padding:6px 0;"> #{host.title} </div>'
+              });
+              infowindow.open(map, marker);
+              // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+              map.setCenter(coords);
+              }
+              });
     

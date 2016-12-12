@@ -4,9 +4,12 @@ extends ../layout
 block main 
   .container 
     .row#row
-        form(method='POST')
-            legend Forgot Password
+        form(action = '/users/forgot', method='POST')
+         h1.page-header 회원 정보 수정 
             .form-group
-            label(for='email') Email
-            input.form-control(type='text', name='email', autofocus)
-            button.btn.btn-primary(type='submit') Reset Password
+              label(for ='name') 이름
+              input.form-control(type='text', name='name',  placeholder='name')
+            .form-group
+              label(for='email') 이메일
+              input.form-control(type='text', name='email',  placeholder='email')
+            button.btn.btn-primary(type='submit') 비밀번호 찾기

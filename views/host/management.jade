@@ -10,10 +10,17 @@ block main
                         a(href='#list', data-toggle="tab") 등록된 방 목록
                     
                     li(role='presentation')
-                        a(href='#endreservation', data-toggle="tab") 예약한 방 목록
+                        a(href='#reservation', data-toggle="tab") 예약 관리
+
+                    li(role='presentation')
+                        a(href='#updatereservaion', data-toggle="tab") 예약 승인된 등록된 방
                     
                     li(role='presentation')
-                        a(href='#reservation', data-toggle="tab") 예약 관리
+                        a(href='#endreservation', data-toggle="tab") 예약한 방 목록
+
+                    li(role='presentation')
+                        a(href='#successreservation', data-toggle="tab") 예약한 완료 목록
+                    
                     
 
 
@@ -24,22 +31,57 @@ block main
                                 tr
                                     th 숙소이름
                                     th 도시
-                                    th 시작 날짜
-                                    th 종료 날짜
+                                    th 채크인 날짜
+                                    th 채크아웃 날짜
                                     th 예약자 이름
                                     th 승인 여부
                             tbody
                                 each roomlist in roomlists
-                                
-                                    tr
+                                    if !(roomlist.reservationState)   
+                                        tr
+                                            td
+                                                a(href ='/host/#{roomlist.host_id}/simple_detail')= roomlist.room_title
+                                            td= roomlist.room_city
+                                            td= moment(roomlist.room_startdate).format('YYYY-MM-DD')
+                                            td= moment(roomlist.room_deaddate).format('YYYY-MM-DD')
+                                            td= roomlist.guest_name
+                                            td
+                                                form(action='/host/#{roomlist._id}/accept', method='POST')        
+                                                    button.btn.btn-primary.btn-xs(type = 'submit')  승인
+                                                    button.btn.btn-primary.btn-xs(data-id=roomlist.id, class='reject')  거절
+                                                
+                                    else if (roomlist.reservationState)
+                                        tr
                                         td
-                                            a(href ='/host/#{roomlist.id}/simple_detail')= roomlist.room_title
+                                            a(href ='/host/#{roomlist.host_id}/simple_detail')= roomlist.room_title
                                         td= roomlist.room_city
                                         td= moment(roomlist.room_startdate).format('YYYY-MM-DD')
                                         td= moment(roomlist.room_deaddate).format('YYYY-MM-DD')
                                         td= roomlist.guest_name
-                                        td.a.btn.btn.btn-default(data-id=roomlist.id, class='reject')  거절
-                                        td.a.btn.btn.btn-default(data-id=roomlist.id, class='accept')  승인 
+                                        td 승인됨             
+              
+                    #updatereservaion.tab-pane(role = 'tabpanel')
+                        table.table.table-striped.table-bordered
+                            thead
+                                tr
+                                    th 숙소이름
+                                    th 도시
+                                    th 채크인 날짜
+                                    th 채크아웃 날짜
+                                    th 예약자 이름
+                                    th 취소 여부
+                            tbody
+                                each roomlist in roomlists
+                                    if(roomlist.reservationState)
+                                        tr
+                                            td
+                                                a(href ='/host/#{roomlist.host_id}/simple_detail')= roomlist.room_title
+                                            td= roomlist.room_city
+                                            td= moment(roomlist.room_startdate).format('YYYY-MM-DD')
+                                            td= moment(roomlist.room_deaddate).format('YYYY-MM-DD')
+                                            td= roomlist.guest_name
+                                            td
+                                                    button.btn.btn-primary.btn-xs(data-id=roomlist.id, class='delete') 취소  
                 
                     #endreservation.tab-pane(role = 'tabpanel')
                         table.table.table-striped.table-bordered
@@ -47,18 +89,19 @@ block main
                                 tr
                                     th 숙소이름
                                     th 도시
-                                    th 시작 날짜
-                                    th 종료 날짜
+                                    th 채크인 날짜
+                                    th 채크아웃 날짜
                                     th 취소 여부
                             tbody
                                 each room in rooms
-                                    tr
-                                        td
-                                            a(href ='/host/#{room.id}/simple_detail')= room.room_title
-                                        td= room.room_city
-                                        td= moment(room.room_startdate).format('YYYY-MM-DD')
-                                        td= moment(room.room_deaddate).format('YYYY-MM-DD')
-                                        td.button.btn.btn-primary.btn-large.btn-block(data-id=room.id, class='delete')  취소
+                                    if (!room.reservationState)
+                                        tr
+                                            td
+                                                a(href ='/host/#{room.host_id}/simple_detail')= room.room_title
+                                            td= room.room_city
+                                            td= moment(room.room_startdate).format('YYYY-MM-DD')
+                                            td= moment(room.room_deaddate).format('YYYY-MM-DD')
+                                            td.button.btn.btn-primary.btn-xs(data-id=room.id, class='delete')  취소
                     
                     #list.tab-pane.active(role = 'tabpanel')
                          table.table.table-striped.table-bordered
@@ -77,7 +120,31 @@ block main
                                         td= host.city
                                         td= moment(host.startdate).format('YYYY-MM-DD')
                                         td= moment(host.deaddate).format('YYYY-MM-DD')
-                                        td.button.btn.btn-primary.btn-large.btn-block(data-id=host.id, class='room_delete')  삭제
+                                        td.button.btn.btn-primary.btn-xs(data-id=host.id, class='room_delete')  삭제
+
+
+                    #successreservation.tab-pane(role = 'tabpanel')
+                         table.table.table-striped.table-bordered
+                            thead
+                                tr
+                                    th 숙소이름
+                                    th 도시
+                                    th 체크인 날짜
+                                    th 체크아웃 날짜
+                                    th 취소 여부
+                            tbody
+                                each room in rooms
+                                    if(room.reservationState)
+                                        tr
+                                            td
+                                                a(href ='/host/#{room.id}/simple_detail')= room.room_title
+                                            td= room.room_city
+                                            td= moment(room.room_startdate).format('YYYY-MM-DD')
+                                            td= moment(room.room_deaddate).format('YYYY-MM-DD')
+                                            td.button.btn.btn-primary.btn-xs(data-id=room.id, class='delete') 취소
+
+      
+
 
       
 
@@ -96,20 +163,12 @@ block main
         script(type='text/javascript').
                 $(".room_delete").click(function(e) {
                     var id = $(e.currentTarget).data('id');
-                    if (confirm('정말 방을 삭제 하시겠습니까?')) {
+                    if (confirm('정말 취소 하시겠습니까?')) {
                     $("#deleteForm").attr('action', "/host/" + id + "/room_delete?_method=DELETE").submit();          
                     }
                     return false;
                 });
             
-        script(type='text/javascript').
-            $(".accept").click(function(e) {
-                var id = $(e.currentTarget).data('id');
-                if (confirm('정말 승인하시겠습니까?')) {
-                $("#deleteForm").attr('action', "/host/" + id + "/accept?_method=POST").submit();          
-                }
-                return false;
-            });
 
         script(type='text/javascript').
             $(".reject").click(function(e) {
