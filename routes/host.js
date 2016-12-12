@@ -125,6 +125,7 @@ router.get('/:id/check', needAuth, function(req, res, next){
   });
 });
 
+//숙소 예약 하기
 router.post('/:id/check', needAuth, function(req, res, next){
   User.findById(req.user.id, function(err, user){
     Host.findById(req.params.id, function(err, host){
@@ -135,12 +136,10 @@ router.post('/:id/check', needAuth, function(req, res, next){
           req.flash('err', '올바른 예약 날짜를 정하시오.');
           return res.redirect('back');
         }
-      var newRoom = new Room({
+      var room = new Room({
         maker_id : host.maker_id,//숙소를 등록한 사람의 아이디를 ROOM스키마의 mkaer_id로 넘겨준다.
         maker_name : host.maker_name,//숙소를 등록한 사람의 이름을 ROOM스키마의 mkaer_id로 넘겨준다.
-        
         host_id : req.params.id,//등록된 숙소의 아이디를 ROOM스키마의 host_id로 넘겨준다.
-     
         room_title : host.title,
         room_content : host.content,
         room_cost : host.cost,
@@ -148,17 +147,19 @@ router.post('/:id/check', needAuth, function(req, res, next){
         room_city : host.city,
         room_startdate : req.body.startdate,
         room_deaddate : req.body.deaddate,
-        
         guest_id : user.id,//예약한 사람의 아이디를 넘겨준다.
         guest_name : user.name//예약한 사람의 이름을 넘겨준다.
       });
-      newRoom.save(function(err){
+      host.reservation_count++;
+      host.save(function(err){
+      room.save(function(err){
         if(err){
           return next(err);
         }else{
           req.flash('success', '예약 완료');
           res.redirect('/');
         }
+        });
       });
     });
   });
@@ -176,6 +177,8 @@ router.post('/:id/detail', function(req, res, next){
         guest_name : user.name,
         guest_id : user.id
       });
+      room.comment_count++;
+      room.save(function(err){
       comments.save(function(err){
         if(err){
           return next(err);
@@ -183,6 +186,7 @@ router.post('/:id/detail', function(req, res, next){
           req.flash('success', '댓글작성완료');
           res.redirect('back');
         }
+        });
       });
     });
   });
@@ -219,13 +223,15 @@ router.post('/:id/detail', function(req, res, next){
 
 //댓글 삭제
  router.delete('/:id/commentdelete', function(req, res, next){
+  Host.find({}, function(err, host){
    Comments.findOneAndRemove({_id : req.params.id}, function(err){
      if(err){
        return next(err);
      }
      req.flash('success', '삭제 완료');
      res.redirect('back');
-   });
+     });
+  });
 });
 
 // 예약 관리

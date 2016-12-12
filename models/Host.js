@@ -17,6 +17,9 @@ var Schema = new Schema({
     picturePath : {type : String},
     createdAt : {type : Date, default : Date.now},
     count : {type : String, required : true},
+    
+    reservation_count : {type : Number, default : 0},
+    comment_count : {type : Number, default : 0},
 }, {
     toJSON : {virtuals : true},
     toObject : {virtuals : true}

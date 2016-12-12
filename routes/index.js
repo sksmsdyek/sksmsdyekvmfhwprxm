@@ -1,6 +1,8 @@
 var express = require('express');
 var User = require('../models/User');
 var Host = require('../models/Host');
+var Room = require('../models/Room');
+var Comments = require('../models/Comments');
 var router = express.Router();
 var _ = require('lodash');
 
@@ -27,13 +29,76 @@ router.post('/search', function(req, res, next){
 });
 
 //첫 화면
-router.get('/', function(req, res, next) {
-  Host.find({}, function(err, hosts){
-    if(err){
-      return next(err);
-    }
-      res.render('index', {hosts : hosts});
-  });
+// router.get('/', function(req, res, next) {
+//   Host.find({}, function(err, hosts){
+//     Comments.find({}, function(err, comments){
+//       Room.find({}, function(err, room){
+//     if(err){
+//       return next(err);
+//     }
+//       res.render('index', {hosts : hosts, comments : comments, room : room});
+//        });
+//     });
+//   });
+// });
+
+//첫 화면
+router.get('/', function(req, res,next){
+    var curPage = 1;
+    if(req.param('page')){
+        curPage = Number(req.param('page'));//정수로 형변환
+    }//몇페이지인지에 대한 파라메터가 있으면 값 받음.
+    Host.find({}, function(err, hosts){
+        Host.count({}, function(err, count){
+            if(err){
+                return next(err);
+            }
+            var totalPageNum = Math.ceil(count/3);
+            var prevUrl = '/?page=';
+            var nextUrl = '/?page=';
+            var pages = new Array();
+            for(var i=1 ; i<=totalPageNum ; i++){
+                pages.push({
+                    cls: '',
+                    text: i, 
+                    url: '/?page='+i
+                });
+            }//pages라는 배열에 pagination 갯수와 정보 담음
+            if(curPage===1){
+                prevUrl = prevUrl + String(curPage);
+                nextUrl = nextUrl + String(curPage+1);//다시 문자열로 형변환하여 문자끼리 더해줌
+            } else if (curPage===totalPageNum){
+                prevUrl= prevUrl + String(curPage-1);
+                nextUrl = nextUrl + String(curPage);
+            } else {
+                prevUrl = prevUrl + String(curPage-1);
+                nextUrl = nextUrl + String(curPage+1);
+            }
+            res.render('index', {
+                hosts: hosts,
+                pagination: {
+                    numPosts: count,
+                    firstPage: {
+                        cls: '',
+                        url: '/?page=1'
+                    },
+                    prevPage: {
+                        cls: '',
+                        url: prevUrl
+                    },
+                    nextPage: {
+                        cls: '',
+                        url: nextUrl
+                    },
+                    lastPage: {
+                        cls: '',
+                        url: '/?page='+totalPageNum
+                    },
+                    pages: pages
+                }
+            });
+        });
+    }).limit(6).skip((curPage-1)*6);//3개씩 디비에서 꺼내고 skip을 통해 끌어올 document 구분지음
 });
 
 

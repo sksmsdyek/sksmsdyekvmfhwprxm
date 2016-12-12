@@ -10,7 +10,7 @@ var Schema = new Schema({
     maker_name : {type : String, required : true},
     //
     host_id : {type : String, required : true},
-    
+    //
     room_startdate : {type : Date, required : true},
     room_deaddate : {type : Date, required : true},
     room_title : {type : String, required : true},

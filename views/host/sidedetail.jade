@@ -4,40 +4,60 @@ block main
     h3 예약
     h4="￦" + host.cost
     form(action = '/host/#{host.id}/check', method = 'post')
-        .row
-            
-            .col-sm-10.col-md-10
-                p
-                    label(for = 'startdate') Check In
-                    input.form-control(type = 'date', name= 'startdate', id = 'startdate')
-                p
-                    label(for = 'deaddate') Check Out
-                    input.form-control(type = 'date', name= 'deaddate', id = 'deaddate')
-  
-                p      
-                    label(for = 'count') 숙박 인원
-                        select.form-control(name='count')
-                            option(value='1', selected) 1
-                            option(value='2') 2
-                            option(value='3') 3
-                            option(value='4') 4
-                            option(value='5') 5
-                            option(value='6') 6
-                            option(value='7') 7
-                            option(value='8') 8
-                            option(value='9') 9
-                            option(value='10') 10
-                            option(value='11') 11
-                            option(value='12') 12
+        p
+            .form-group
+                #datetimepicker6.input-group.date
+                    input.form-control(type='text', id = "datetimepicker6", name = 'startdate')
+                    |                 
+                    span.input-group-addon
+                        span.glyphicon.glyphicon-calendar
+    
+        p     
+            .form-group
+                #datetimepicker7.input-group.date
+                    input.form-control(type='text',id = 'datetimepicker7', name = 'deaddate')
+                    |                 
+                    span.input-group-addon
+                        span.glyphicon.glyphicon-calendar
+        
+            script(type='text/javascript').
+                $(function () {
+                $('#datetimepicker6').datetimepicker();
+                $('#datetimepicker7').datetimepicker({
+                useCurrent: false //Important! See issue #1075
+                });
+                $("#datetimepicker6").on("dp.change", function (e) {
+                $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+                });
+                $("#datetimepicker7").on("dp.change", function (e) {
+                $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+                });
+                });
+
+            p      
+                label(for = 'count') 숙박 인원
+                    select.form-control(name='count')
+                        option(value='1', selected) 1
+                        option(value='2') 2
+                        option(value='3') 3
+                        option(value='4') 4
+                        option(value='5') 5
+                        option(value='6') 6
+                        option(value='7') 7
+                        option(value='8') 8
+                        option(value='9') 9
+                        option(value='10') 10
+                        option(value='11') 11
+                        option(value='12') 12
 
 
-                p
-                    button.btn.btn-primary.btn-large.btn-block(type='submit') 예약 요청
+            p
+                button.btn.btn-primary.btn-large.btn-block(type='submit') 예약 요청
 
-                p
-                    a.btn.btn-primary(data-toggle='collapse', href='#collapseExample', aria-expanded='false', aria-controls='collapseExample')
-                        | 자세히보기
-                    #collapseExample.collapse
-                        .well
-                            | 가격 : #{host.cost}
+            p
+                a.btn.btn-primary(data-toggle='collapse', href='#collapseExample', aria-expanded='false', aria-controls='collapseExample')
+                    | 자세히보기
+                #collapseExample.collapse
+                    .well
+                        | 가격 : #{host.cost}
 

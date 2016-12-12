@@ -129,16 +129,10 @@ block main
                 option(value='12') 12    
       p
         .row
-          //- .col-sm-8
-          //-   laber(for = 'startdate') 예약 시작 날짜
-          //-   input.form-control(type = 'date', id = 'startdate', name = 'startdate')   
-          //-   laber(for = 'deaddate') 예약 종료 날짜
-          //-   input.form-control(type = 'date', id = 'deaddate', name = 'deaddate')       
-
           .col-md-5
               .form-group
                   #datetimepicker6.input-group.date
-                      input.form-control(type='text', name = 'startdate')
+                      input.form-control(type='text', id = "datetimepicker6", name = 'startdate')
                       |                 
                       span.input-group-addon
                           span.glyphicon.glyphicon-calendar
@@ -146,7 +140,7 @@ block main
           .col-md-5
               .form-group
                   #datetimepicker7.input-group.date
-                      input.form-control(type='text', name = 'deaddate')
+                      input.form-control(type='text',id = 'datetimepicker7', name = 'deaddate')
                       |                 
                       span.input-group-addon
                           span.glyphicon.glyphicon-calendar

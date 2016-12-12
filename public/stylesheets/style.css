@@ -13,7 +13,7 @@ a {
     background-repeat: no-repeat;
     background-position: left; 
     position:fixed;
-    margin-left: 105em;
+    margin-left: 85em;
     font-size: 0.3em;
     top: 2em;
   
@@ -28,6 +28,9 @@ a {
 #size{
   margin-top : 40px;
   
+}
+.dsize{
+  width : 100%;
 }
 
   .date{
