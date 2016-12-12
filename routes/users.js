@@ -130,6 +130,16 @@ router.get('/new', function(req, res, next){
      }
      user.name = req.body.name;
      user.email = req.body.email;
+     user.sex = req.body.sex;
+     user.birth = req.body.birth;
+     user.phonenumber = req.body.phonenumber;
+     user.language = req.body.language;
+     user.graphic = req.body.graphic;
+     user.city = req.body.city;
+     user.intro = req.body.intro;
+     user.school = req.body.school;
+     user.job = req.body.job;
+     
 
      if(req.body.newpassword){
        user.password = user.generateHash(req.body.newpassword);
@@ -165,9 +175,12 @@ router.get('/new', function(req, res, next){
    });
  });
 
-router.get('/forgot', function(req, res, next){
-  res.render('users/forgot')
-});
+
+
+
+// router.get('/find', function(req, res, next){
+//     res.render('users/forgot');
+// });
 
 // router.post('/forgot', function(req, res, next){
 //   User.findById(req.body.email, function(err, user){
@@ -175,9 +188,32 @@ router.get('/forgot', function(req, res, next){
 //       return next(err);
 //     }
 //     if(user.email == req.body.email){
-//       var chars =
+//       var chars ="0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+//       var length = 8;
+//       var random = '';
+//       for(var i = 0; i<length; i++){
+//         var rnum = Math.floor(Math.random() * chars.length);
+//         random += chars.substring(rnum,rnum+1);
+//       }
 //     }
-//   })
+//     user.password = user.generateHash(random);
+//     user.save(function(err){
+//       var sendgrid  = require('sendgrid')('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');
+//       var email     = new sendgrid.Email({
+//         to : user.email,
+//         form : 'yhyh0614@hanmail.net',
+//         subcject : 'HunBnB 임시비밀번호',
+//         text : 'random'
+//     });
+//     sendgrid.send(email, function(err){
+//       if(err){
+//         return next(err);
+//       }
+//       req.flash('success','이메일 전송 완료');
+//       return res.redirect('/');
+//     });
+//   });
+// });
 // });
 
 

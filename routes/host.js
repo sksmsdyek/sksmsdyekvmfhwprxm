@@ -28,7 +28,7 @@ router.get('/:id/detail', function(req, res, next){
         return next(err);
       }
       res.render('host/detail', {host : host, comments : comments});
-     });
+            });
    });
 });
 
@@ -116,14 +116,17 @@ router.post('/:id/update', upload.single('file'), function(req, res, next){
 
 
 
+
 //숙소 예약 페이지를 불러온다.
-router.get('/:id/check', needAuth, function(req, res, next){
-  Host.findById(req.params.id, function(err, host){
-      User.findById(req.user.id, function(err, user){
-        res.render('host/check', {host : host, user : user});
-    });
-  });
-});
+// router.get('/:id/check', needAuth, function(req, res, next){
+//   Host.findById(req.params.id, function(err, host){
+//       User.findById(req.user.id, function(err, user){
+//         res.render('host/check', {host : host, user : user});
+//     });
+//   });
+// });
+
+
 
 //숙소 예약 하기
 router.post('/:id/check', needAuth, function(req, res, next){
@@ -174,8 +177,6 @@ router.post('/:id/detail', function(req, res, next){
         guest_name : user.name,
         guest_id : user.id
       });
-      room.comment_count++;
-      room.save(function(err){
       comments.save(function(err){
         if(err){
           return next(err);
@@ -183,7 +184,6 @@ router.post('/:id/detail', function(req, res, next){
           req.flash('success', '댓글작성완료');
           res.redirect('back');
         }
-        });
       });
     });
   });
@@ -226,7 +226,7 @@ router.post('/:id/detail', function(req, res, next){
        return next(err);
      }
      req.flash('success', '삭제 완료');
-     res.redirect('back');
+     res.redirect('back')
      });
   });
 });

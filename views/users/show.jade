@@ -2,21 +2,31 @@ extends ../layout
 
  
 block main 
-  .container 
+  .container
     .row#row
-    h1.page-header 사용자 정보
-           
-    ul 
-      li Name: #{user.name} 
-      li Email: #{user.email} 
-      if user.facebook 
-        li Facebook  
-          img.img-circle(src='#{user.facebook.photo}') 
+      .col-sm-4-offset-1
+        a.thumbnail#_row
+            span#shape.glyphicon.glyphicon-user
+      if (user.facebook)
+        a.thumbnail#_row
+          img.img-circle(src='#{user.facebook.photo}')
+      
+      .col-sm-4
+        p       
+        h1 안녕하세요 #{user.name} 입니다.
+        p
+          span Email: #{user.email}
+        p
+          sapn= "회원가입" + moment(user.createdAt).format('YYYY-MM')
+        p
+          span#shape.glyphicon.glyphicon-flag 사랑합니다.
+        p
+          a(href='/users/#{user._id}/edit') 프로필 수정하기 
+       
+
     hr 
     p 
       a.btn.btn-default(href='/') Home 
-      |  
-      a.btn.btn-default(href='/users/#{user._id}/edit') 수정 
       |  
       a.btn.btn.btn-default(data-id=user.id, class='delete')  탈퇴
 

@@ -3,8 +3,10 @@ var User = require('../models/User');
 var Host = require('../models/Host');
 var Room = require('../models/Room');
 var Comments = require('../models/Comments');
-var router = express.Router();
+
 var _ = require('lodash');
+var router = express.Router();
+
 
 var countries = [
   "용인", '서울', '대구', '대전', '인천', '부산', '울산', '원주', '광주', '제주도', '울릉도'
@@ -28,19 +30,7 @@ router.post('/search', function(req, res, next){
   });
 });
 
-//첫 화면
-// router.get('/', function(req, res, next) {
-//   Host.find({}, function(err, hosts){
-//     Comments.find({}, function(err, comments){
-//       Room.find({}, function(err, room){
-//     if(err){
-//       return next(err);
-//     }
-//       res.render('index', {hosts : hosts, comments : comments, room : room});
-//        });
-//     });
-//   });
-// });
+
 
 //첫 화면
 router.get('/', function(req, res,next){

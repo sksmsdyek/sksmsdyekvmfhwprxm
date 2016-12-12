@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "ajax": "0.0.4",
     "bcryptjs": "^2.3.0",
     "body-parser": "~1.15.2",
     "connect-flash": "^0.1.1",
@@ -25,6 +26,7 @@
     "morgan": "~1.7.0",
     "multer": "^1.2.0",
     "multiparty": "^4.1.2",
+    "node-ajax": "^0.1.5",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0",

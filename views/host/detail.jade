@@ -110,10 +110,25 @@ block main
                   td= comment.root_comment
 
             .row  
-                form.form-inline(action='/host/' + host.id + '/detail', method='POST')
+                form.form-inline(action='/host/#{host.id}/detail', method='POST')
                   .form-group
                     input.form-control(name='comment', size=50, placeholder='comment')
                   button.btn.btn-info 댓글저장
+
+
+      nav.center
+        ul.pagination
+            li(class=pagination.firstPage.cls): a(href=pagination.firstPage.url)
+                span(aria-hidden="true") &laquo;
+            li(class=pagination.prevPage.cls): a(href=pagination.prevPage.url)
+                span(aria-hidden="true") &lt;
+            each page in pagination.pages
+                li(class=page.cls)
+                    a(href=page.url): span= page.text
+            li(class=pagination.nextPage.cls): a(href=pagination.nextPage.url)
+                span(aria-hidden="true") &gt;
+            li(class=pagination.lastPage.cls): a(href=pagination.lastPage.url)
+                span(aria-hidden="true") &raquo;
 
 
       .row#row
@@ -154,7 +169,6 @@ block main
 
         .col-md-4.side
           include ./sidedetail
-
 
         
         form#deleteForm(style='display:none', method="POST")
