@@ -75,7 +75,8 @@ block main
                             a.portfolio-link(href='/host/#{host.id}/detail', data-toggle='modal')
                                 .caption
                                     .caption-content
-                                        p 예약 수 #{host.reservation_count}                      
+                                        p 예약 수 #{host.reservation_count}
+                                        p 작성자 #{host.maker_name} 이름 #{host.title} 금액 #{host.cost}                      
                                 img.img-responsive#mainimg(src='#{host.picturePath}', alt = '사진 사이즈가 적절하지 않습니다.') 
 
                 nav.center
