@@ -17,19 +17,6 @@ block main
                 .caption
                   h5 금액 #{host.cost} 주소 #{host.address }
               nav.center
-              ul.pagination
-                  li(class=pagination.firstPage.cls): a(href=pagination.firstPage.url)
-                      span(aria-hidden="true") &laquo;
-                  li(class=pagination.prevPage.cls): a(href=pagination.prevPage.url)
-                      span(aria-hidden="true") &lt;
-                  each page in pagination.pages
-                      li(class=page.cls)
-                          a(href=page.url): span= page.text
-                  li(class=pagination.nextPage.cls): a(href=pagination.nextPage.url)
-                      span(aria-hidden="true") &gt;
-                  li(class=pagination.lastPage.cls): a(href=pagination.lastPage.url)
-                      span(aria-hidden="true") &raquo;    
-          
         
         .col-sm-offset-5.col-sm-5#_map
           each host in hosts
