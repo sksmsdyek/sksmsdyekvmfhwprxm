@@ -22,7 +22,7 @@ router.get('/suggest', function(req, res, next) {
 });
 
 router.post('/search', function(req, res, next){
-  Host.find({city : req.body.q, count : req.body.count}, function(err, hosts){//입력한 도시와 Host에 저장된 도시를 찾는다.
+  Host.find({city : req.body.q}, function(err, hosts){//입력한 도시와 Host에 저장된 도시를 찾는다.
       if(err){
           return next(err);
       }
