@@ -227,7 +227,7 @@ router.post('/:id/detail', function(req, res, next){
        return next(err);
      }
      req.flash('success', '삭제 완료');
-     res.redirect('back')
+     res.redirect('back');
      });
   });
 });

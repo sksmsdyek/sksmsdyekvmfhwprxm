@@ -7,82 +7,77 @@ block main
     h1.page-header 회원 정보 수정 
     form(action='/users/#{user._id}?_method=PUT', method='POST')
       .thumbnail 필수사항 
-        .form-group 
+        .form-group.has-error 
           label(for='name') 이름(예 : 길동)
           input.form-control(type='text', id='name', name='name', placeholder='Your name', value=user.name) 
-        .form-group 
-          label(for='first') 이름(예 : 홍)
-          input.form-control(type='text', id='first', name='first', placeholder='Your firstname', value=user.first)
-         .form-group.has-error
-            label.control-label(for='sex') 성별
-            select.form-control(name='sex')
-                option(selected value='성별') 성별
-                option(value='남자') 남자
-                option(value='여자') 여자
-                option(value='기타') 기타
-            span 이 자료는 통계 목적으로 사용되며 다른 회원들에게 절대 공개되지 않습니다.
-          .form-group.has-error
-            label.control-label(for='birth') 생년월일(YYYY-MM-DD)
-            input.form-control(type='text', id='birth', name='birth', placeholder='Your birth', value=user.birth)
-            span 이 자료는 통계 목적으로 사용되며 다른 회원들에게 절대 공개되지 않습니다.
           .form-group.has-error
             label.control-label(for='email') 이메일 주소
             input.form-control(type='email', id='email', name='email', placeholder='Email', value=user.email) 
             span 이메일 주소는 다른 에어비앤비 회원에게 공개되지 않습니다
           .form-group.has-error
-            label.control-label(for='phonenumber') 전화번호
-            input.form-control(type='text', id='phonenumber', name='phonenumber', placeholder='phonenumber', value=user.phonenumber) 
-            span 예약이 완료될 경우에만 공유됩니다. 번호가 공유되면 개인적으로 연락할 수 있습니다.
-          .form-group
-            label.control-label(for='language') 선호하는 언어
-            select.form-control(name='language')
-                option(selected value='한국어') 한국어
-                option(value='일본어') 일본어
-                option(value='중국어') 중국어
-                option(value='미국어') 미국어
-                option(value='광동어') 광동어
-                option(value='아랍어') 아랍어
-                option(value='러시아어') 러시아어
-                option(value='프랑스어') 프랑스어
-                option(value='라오스어') 라오스어
-              span 이 언어로 메시지를 보내겠습니다
-          .form-group
-            label.control-label(for='graphic') 선호하는 통화 단위
-            select.form-control(name='graphic')
-                option(selected value='KRW') KRW
-                option(value='JPY') JPY
-                option(value='INR') INR
-                option(value='HUF') HUF
-                option(value='HRK') HRK
-                option(value='HKF') HKF
-                option(value='DKK') DKK
-                option(value='COP') COP
-                option(value='CLP') CLP
-              span 이 통화 단위로 요금이 표시됩니다.
-          .form-group 
-            label(for='city') 거주도시
-            input.form-control(type='text', id='city', name='city', placeholder='예:프랑스 파리, 뉴욕 브루클린, 일리노이주 시카고', value=user.city)
-          .form-group 
-            label(for='intro') 자기소개
-            textarea.input.form-control(type='text', id='intro', name='intro', placeholder='자기소개', value=user.intro)
-            span 에어비앤비는 사람들 간의 관계를 기반으로 만들어졌습니다. 회원님이 어떤 사람인지 알려주세요.
-          .form-group 
             label(for='password') 현재 비밀번호
             input.form-control(type='password', id='password', name='password', placeholder='Current Password ') 
-          .form-group 
+          .form-group.has-error 
             label(for='newpassword') 새 비밀번호 
             input.form-control(type='password', id='newpassword', name='newpassword', placeholder='New Password ') 
-          .form-group 
+          .form-group.has-error 
             label(for='new_password') 비밀번호 확인
             input.form-control(type='password', id='new_password', name='new_password', placeholder='New Password') 
-
       .thumbnail 선택사항
+        .form-group 
+            label(for='first') 이름(예 : 홍)
+            input.form-control(type='text', id='first', name='first', placeholder='Your firstname', value=user.first)
+          .form-group
+              label.control-label(for='sex') 성별
+              select.form-control(name='sex')
+                  option(selected value='성별') 성별
+                  option(value='남자') 남자
+                  option(value='여자') 여자
+                  option(value='기타') 기타
+              span 이 자료는 통계 목적으로 사용되며 다른 회원들에게 절대 공개되지 않습니다.
+            .form-group
+              label.control-label(for='birth') 생년월일(YYYY-MM-DD)
+              input.form-control(type='text', id='birth', name='birth', placeholder='Your birth', value=user.birth)
+              span 이 자료는 통계 목적으로 사용되며 다른 회원들에게 절대 공개되지 않습니다.
         .form-group 
           label(for='school') 학교
           input.form-control(type='text', id='school', name='school', value=user.school)
         .form-group 
           label(for='job') 직업
           input.form-control(type='text', id='job', name='job', value=user.job)
+        .form-group
+          label.control-label(for='language') 선호하는 언어
+          select.form-control(name='language')
+              option(selected value='한국어') 한국어
+              option(value='일본어') 일본어
+              option(value='중국어') 중국어
+              option(value='미국어') 미국어
+              option(value='광동어') 광동어
+              option(value='아랍어') 아랍어
+              option(value='러시아어') 러시아어
+              option(value='프랑스어') 프랑스어
+              option(value='라오스어') 라오스어
+            span 이 언어로 메시지를 보내겠습니다
+        .form-group
+          label.control-label(for='graphic') 선호하는 통화 단위
+          select.form-control(name='graphic')
+              option(selected value='KRW') KRW
+              option(value='JPY') JPY
+              option(value='INR') INR
+              option(value='HUF') HUF
+              option(value='HRK') HRK
+              option(value='HKF') HKF
+              option(value='DKK') DKK
+              option(value='COP') COP
+              option(value='CLP') CLP
+            span 이 통화 단위로 요금이 표시됩니다.
+        .form-group 
+          label(for='city') 거주도시
+          input.form-control(type='text', id='city', name='city', placeholder='예:프랑스 파리, 뉴욕 브루클린, 일리노이주 시카고', value=user.city)
+        .form-group 
+          label(for='intro') 자기소개
+          textarea.input.form-control(type='text', id='intro', name='intro', placeholder='자기소개', value=user.intro)
+          span 에어비앤비는 사람들 간의 관계를 기반으로 만들어졌습니다. 회원님이 어떤 사람인지 알려주세요.
       div.form-actions 
         a.btn.btn-default(href='javascript:window.history.back();') Back  
         |  
