@@ -1,13 +1,6 @@
-/*global $:false */
-/*global _:false */
-/*jslint browser:true */
-var TaskController = function() {
-  function setAjaxHandler() {
-    $( document ).ajaxStart(function() {
-      $("#main").addClass("loading");
-    }).ajaxStop(function() {
-      $("#main").removeClass("loading");
-    });
-  }
-
-} ();
+$(function() {
+    var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+    if (width > 1023){
+        $('#map').removeClass("#map");
+    }
+});

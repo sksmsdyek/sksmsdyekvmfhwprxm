@@ -33,32 +33,33 @@ block main
                         h2.section-heading 원하는 여행지를 검색하세요.
                             p
                                 form(action = '/search', method = 'POST')   
-                                    .form.group
-                                        input.form-control(type='text', id='q', name = 'q', size=20, placeholder='목적지,도시명,주소')
-                                        i.fa.fa-spin.fa-spinner
-                                        ul.suggest-box
-                                        button.btn.btn-primary(type='submit') 숙소검색 
-                                script(src='/javascripts/search.js')
+                                    .col-sm-3    
+                                        .form.group
+                                            input.form-control(type='text', id='q', name = 'q', size=20, placeholder='목적지,도시명,주소')
+                                            i.fa.fa-spin.fa-spinner
+                                            ul.suggest-box
+                                        
+                                    .col-sm-3   
+                                        .form.group
+                                                select.form-control(name='count')
+                                                    option(selected value='1') 1명
+                                                    option(value='2') 2명   
+                                                    option(value='3') 3명
+                                                    option(value='4') 4명
+                                                    option(value='5') 5명
+                                                    option(value='6') 6명
+                                                    option(value='7') 7명
+                                                    option(value='8') 8명
+                                                    option(value='9') 9명
+                                                    option(value='10') 10명
+                                                    option(value='11') 11명
+                                                    option(value='12') 12명
                                 
-                                //- .row
-                                //-     label(for = 'count') 인원
-                                //-         select.form-control(name='count')
-                                //-             option(selected value='1') 1
-                                //-             option(value='2') 2
-                                //-             option(value='3') 3
-                                //-             option(value='4') 4
-                                //-             option(value='5') 5
-                                //-             option(value='6') 6
-                                //-             option(value='7') 7
-                                //-             option(value='8') 8
-                                //-             option(value='9') 9
-                                //-             option(value='10') 10
-                                //-             option(value='11') 11
-                                //-             option(value='12') 12    
-     
-                                //-     laber 날짜
-                                //-     input(type = 'date', id = 'startdate', name = 'startdate')
-                                //-     input(type = 'date', id = 'deaddate', name = 'deaddate')    
+                                    
+                                        button.btn.btn-primary(type='submit') 숙소검색 
+                                          
+                                script(src='/javascripts/search.js')
+        
                                      
                                       
         
