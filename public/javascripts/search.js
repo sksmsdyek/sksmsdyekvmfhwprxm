@@ -1,7 +1,8 @@
-(function() {
+$(function() {
   $('#q').keyup(function() {
     var query = $('#q').val() || "";
     query = query.trim();
+    console.log(query);
     if (!query) {
       return; // typing한 내용이 없으면 종료
     }
