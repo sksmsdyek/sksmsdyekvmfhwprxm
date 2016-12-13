@@ -9,7 +9,7 @@ block main
           h1.pageTitle 도시별 목록
               each host in hosts
                 .thumbnail(style="height:200px; width : 200px")
-                  img.img-responsive(src=host.picturePath alt="사진")
+                  img.img-responsive(src=host.picturePath, alt="사진")
                 .caption
                     a(href='/host/#{host.id}/detail')= host.title
                 .caption  

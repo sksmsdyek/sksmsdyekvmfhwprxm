@@ -158,8 +158,8 @@ router.post('/:id/check', function(req, res, next){
         if(err){
           return next(err);
         }else{
-          req.flash('success', '예약 완료');
-          res.redirect('/');
+          req.flash('success','예약 완료');
+          res.redirect('back');
         }
       });
     });
@@ -190,11 +190,11 @@ router.post('/:id/detail', function(req, res, next){
   });
 });
 
-router.get('/:id/detail/comment', function(req, res, next){
-  Comments.findById(req.params.id, function(err, comment){
-    res.render('host/comment',{comment : comment});
-  });
-});
+// router.get('/:id/detail/comment', function(req, res, next){
+//   Comments.findById(req.params.id, function(err, comment){
+//     res.render('host/comment',{comment : comment});
+//   });
+// });
 
 //관리자가 댓글단 경우 db저장
 router.post('/:id/detail', function(req, res, next){

@@ -2,7 +2,7 @@ block main
     link(href="/stylesheets/style.css" rel="stylesheet")
     .row#size
     h3 예약
-    h4="￦" + (host.cost)*(host.count) + + parseInt(host.cost)*0.2 + parseInt(host.cost)*0.1
+    h4= "총 ₩"parseInt(host.cost)*0.1 + parseInt(host.cost)*0.2 + ((host.cost)*host.count))
     form(action = '/host/#{host.id}/check', method = 'post')
         label(for = 'startdate') 체크인
             p
@@ -61,12 +61,10 @@ block main
                 #collapseExample2.collapse
                     .well
                         p
-                            span= '추가 인원 요금 : ₩' + parseInt(host.cost)*0.3 +'/박' + (host.count) +'명 추가시'
-                        p
                             span= '청소비 : ₩' + parseInt(host.cost)*0.1
                         p
                             span= '보증금 : ₩' + parseInt(host.cost)*0.2
                         p
-                            span= '기본요금 : ₩' + (host.cost)*(host.count)
+                            span= '기본요금 : ₩' + (host.cost)
 
 

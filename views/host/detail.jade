@@ -42,8 +42,6 @@ block main
             p
               span= '₩' + (host.cost)
             p
-              span= '추가 인원 요금 : ₩' + parseInt(host.cost)*0.3 +'/박' + (host.count) +'명 추가시'
-            p
               span= '청소비 : ₩' + parseInt(host.cost)*0.1
             p
               span= '보증금 : ₩' + parseInt(host.cost)*0.2
@@ -71,64 +69,35 @@ block main
                         
                  
       .row#row
-        .col-md-8.col-xs-8
-          if(currentUser.root)
-            h3 댓글
+        .col-md-9.col-xs-9
+          if(currentUser)
             table.table
               tr
-                th Name
-                th Commnet
-                th time
-                
-
+                th 이름
+                th 댓글
+                th 시간
+                th 답글
               each comment in comments
                 tr
-                  td= comment.guest_name
-                  td= comment.comment
-                  td= moment(comment.createdAt).format('YYYY/MM/DD')
-                tr
-                  td= comment.root_comment
-                  td
-                      a(href='/host/#{comment.id}/detail/comment') 답글달기
-                  td.button.btn.btn-primary(data-id=comment.id, class='delete') 삭제
+                   td= comment.guest_name
+                   td= comment.comment
+                   td= moment(comment.createdAt).format('YYYY/MM/DD')
 
-          else if(currentUser)
-            h3 댓글
-            table.table
-              tr
-                th Name
-                th Commnet
-                th time
-
-              each comment in comments
-                tr
-                  td= comment.guest_name
-                  td= comment.comment
-                  td= moment(comment.createdAt).format('YYYY/MM/DD')
-
-                tr
-                  td= comment.root_comment
-
-            .row  
-                form.form-inline(action='/host/#{host.id}/detail', method='POST')
-                  .form-group
-                    input.form-control(name='comment', size=50, placeholder='comment')
-                  button.btn.btn-info 댓글저장
+                   if(currentUser.root)
+                    td #{comment.root_comment}
+                    td
+                      form.form-inline(action='/host/#{host.id}/detail', method='POST')
+                          form-group
+                            input.form-control(name='root_comment', size=50, placeholder='comment')
+                            button.btn.btn-info 답글저장
+                    td.btn.btn-primary(data-id=comment.id, class='delete') 삭제
 
 
-      //- nav.center
-      //-   ul.pagination
-      //-       li(class=pagination.firstPage.cls): a(href=pagination.firstPage.url)
-      //-           span(aria-hidden="true") &laquo;
-      //-       li(class=pagination.prevPage.cls): a(href=pagination.prevPage.url)
-      //-           span(aria-hidden="true") &lt;
-      //-       each page in pagination.pages
-      //-           li(class=page.cls)
-      //-               a(href=page.url): span= page.text
-      //-       li(class=pagination.nextPage.cls): a(href=pagination.nextPage.url)
-      //-           span(aria-hidden="true") &gt;
-      //-       li(class=pagination.lastPage.cls): a(href=pagination.lastPage.url)
-      //-           span(aria-hidden="true") &raquo;
+      .row
+          form.form-inline(action='/host/#{host.id}/detail', method='POST')
+            .form-group
+              input.form-control(name='comment', size=50, placeholder='comment')
+            button.btn.btn-info 댓글저장
 
 
       .row#row
