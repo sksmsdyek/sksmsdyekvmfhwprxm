@@ -2,8 +2,8 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var Schema = new Schema({
-    startdate : {type : Date, required : true},
-    deaddate : {type : Date, required : true},
+    startdate : {type : String, required : true},
+    deaddate : {type : String, required : true},
     maker_id : {type : String, required : true},
     maker_name : {type : String, required : true}, 
     title : {type : String, required : true},

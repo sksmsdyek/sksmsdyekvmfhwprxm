@@ -13,8 +13,8 @@ var Schema = new Schema({
     //
     reservationState : {type : Boolean, default : false},
     //
-    room_startdate : {type : Date, required : true},
-    room_deaddate : {type : Date, required : true},
+    room_startdate : {type : String, required : true},
+    room_deaddate : {type : String, required : true},
     room_title : {type : String, required : true},
     room_content : {type : String, required : true},
     room_cost : {type : String, required : true},

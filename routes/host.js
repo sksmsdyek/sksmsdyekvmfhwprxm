@@ -129,16 +129,9 @@ router.post('/:id/update', upload.single('file'), function(req, res, next){
 
 
 //숙소 예약 하기
-router.post('/:id/check', needAuth, function(req, res, next){
+router.post('/:id/check', function(req, res, next){
   User.findById(req.user.id, function(err, user){
     Host.findById(req.params.id, function(err, host){
-        if(req.body.count > host.count ){
-          req.flash('err', '숙박 인원이 초과하였습니다.');
-          return res.redirect('back');
-        }else if(req.body.startdate < host.startdate || req.body.deaddate > host.deaddate){
-          req.flash('err', '올바른 예약 날짜를 정하시오.');
-          return res.redirect('back');
-        }
       var room = new Room({
         maker_id : host.maker_id,//숙소를 등록한 사람의 아이디를 ROOM스키마의 mkaer_id로 넘겨준다.
         maker_name : host.maker_name,//숙소를 등록한 사람의 이름을 ROOM스키마의 mkaer_id로 넘겨준다.
@@ -153,6 +146,14 @@ router.post('/:id/check', needAuth, function(req, res, next){
         guest_id : user.id,//예약한 사람의 아이디를 넘겨준다.
         guest_name : user.name//예약한 사람의 이름을 넘겨준다.
       });
+        if(req.body.count > host.count ){
+          req.flash('danger', '숙박 인원이 초과하였습니다.');
+          return res.redirect('back');
+        }else if(req.body.startdate < host.startdate || req.body.deaddate > host.deaddate){
+          req.flash('danger', '올바른 예약 날짜를 정하시오.');
+          return res.redirect('back');
+        }
+
       room.save(function(err){
         if(err){
           return next(err);
